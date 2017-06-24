@@ -202,12 +202,14 @@ public:
 
     vector<string*> listRegisteredObjects();
 
-    void loadLibrary(string libraryName);
+    bool loadLibrary(string libraryName);
     void loadExternal(string externalName);
 
     static void post(string text);
     static void error(string text);
     static void verbose(int level, string text);
+
+    static void setVerboseLevel(int level);
 
     ServerAudioDevice* audioDevice();
     ServerMIDIDevice* midiDevice();

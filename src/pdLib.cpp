@@ -237,7 +237,7 @@ AtomList cmp_get_loaded_list()
     return ret;
 }
 
-void cmp_loadlib(std::string name)
+int cmp_loadlib(std::string name)
 {
     sys_load_lib(canvas_getcurrent(), name.c_str());
 }

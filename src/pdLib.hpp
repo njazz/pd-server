@@ -80,7 +80,7 @@ extern ceammc::AtomList cmp_get_loaded_list();
 /// \details probably will be removed later
 /// \return
 ///
-extern void cmp_loadlib(std::string lib);
+extern int cmp_loadlib(std::string lib);
 
 #pragma mark -
 

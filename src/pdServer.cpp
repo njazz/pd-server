@@ -267,12 +267,27 @@ ServerPath* ServerInstance::path() { return _path; };
 
 vector<string*> ServerInstance::listRegisteredObjects(){};
 
-void ServerInstance::loadLibrary(string libraryName){};
+bool ServerInstance::loadLibrary(string libraryName)
+{
+    bool ret = cmp_loadlib(libraryName);
+
+    cmp_post("loading library '" + libraryName + "' ...");
+
+    if (!ret)
+        cmp_post("Library not loaded: " + libraryName);
+
+    return ret;
+};
 void ServerInstance::loadExternal(string externalName){};
 
 void ServerInstance::post(string text) { cmp_post(text); };
 void ServerInstance::error(string text) { cmp_post(text); };
 void ServerInstance::verbose(int level, string text) { cmp_post(text); };
+
+void ServerInstance::setVerboseLevel(int level)
+{
+    cmp_set_verbose(level);
+};
 
 ServerAudioDevice* ServerInstance::audioDevice() { return _audioDevice; };
 ServerMIDIDevice* ServerInstance::midiDevice() { return _midiDevice; };

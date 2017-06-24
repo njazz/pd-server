@@ -153,7 +153,8 @@ HEADERS +=\
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h
 
 unix {
-    target.path = /usr/lib
+    target.path = /usr/local/lib
+
     INSTALLS += target
 }
 

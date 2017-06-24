@@ -1,0 +1,105 @@
+Determining if files bstring.h exist failed with the following output:
+Change Dir: /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_47964/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_47964.dir/build.make CMakeFiles/cmTC_47964.dir/build
+Building C object CMakeFiles/cmTC_47964.dir/CheckIncludeFiles.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -std=gnu99 -funroll-loops -fomit-frame-pointer    -o CMakeFiles/cmTC_47964.dir/CheckIncludeFiles.c.o   -c /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: 'bstring.h' file not found
+#include <bstring.h>
+         ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_47964.dir/CheckIncludeFiles.c.o] Error 1
+make: *** [cmTC_47964/fast] Error 2
+
+Source:
+/* */
+#include <bstring.h>
+
+
+int main(void){return 0;}
+
+Determining if files bstring.h exist failed with the following output:
+Change Dir: /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ecf8f/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ecf8f.dir/build.make CMakeFiles/cmTC_ecf8f.dir/build
+Building C object CMakeFiles/cmTC_ecf8f.dir/CheckIncludeFiles.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -std=gnu99 -funroll-loops -fomit-frame-pointer    -o CMakeFiles/cmTC_ecf8f.dir/CheckIncludeFiles.c.o   -c /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: 'bstring.h' file not found
+#include <bstring.h>
+         ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_ecf8f.dir/CheckIncludeFiles.c.o] Error 1
+make: *** [cmTC_ecf8f/fast] Error 2
+
+Source:
+/* */
+#include <bstring.h>
+
+
+int main(void){return 0;}
+
+Determining if files bstring.h exist failed with the following output:
+Change Dir: /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_fbb99/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_fbb99.dir/build.make CMakeFiles/cmTC_fbb99.dir/build
+Building C object CMakeFiles/cmTC_fbb99.dir/CheckIncludeFiles.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -std=gnu99 -funroll-loops -fomit-frame-pointer    -o CMakeFiles/cmTC_fbb99.dir/CheckIncludeFiles.c.o   -c /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: 'bstring.h' file not found
+#include <bstring.h>
+         ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_fbb99.dir/CheckIncludeFiles.c.o] Error 1
+make: *** [cmTC_fbb99/fast] Error 2
+
+Source:
+/* */
+#include <bstring.h>
+
+
+int main(void){return 0;}
+
+Determining if files bstring.h exist failed with the following output:
+Change Dir: /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_99523/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_99523.dir/build.make CMakeFiles/cmTC_99523.dir/build
+Building C object CMakeFiles/cmTC_99523.dir/CheckIncludeFiles.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -std=gnu99 -funroll-loops -fomit-frame-pointer    -o CMakeFiles/cmTC_99523.dir/CheckIncludeFiles.c.o   -c /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: 'bstring.h' file not found
+#include <bstring.h>
+         ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_99523.dir/CheckIncludeFiles.c.o] Error 1
+make: *** [cmTC_99523/fast] Error 2
+
+Source:
+/* */
+#include <bstring.h>
+
+
+int main(void){return 0;}
+
+Determining if files bstring.h exist failed with the following output:
+Change Dir: /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0c52d/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_0c52d.dir/build.make CMakeFiles/cmTC_0c52d.dir/build
+Building C object CMakeFiles/cmTC_0c52d.dir/CheckIncludeFiles.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -std=gnu99 -funroll-loops -fomit-frame-pointer    -o CMakeFiles/cmTC_0c52d.dir/CheckIncludeFiles.c.o   -c /Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/Users/njazz/Documents/puredata-ceam/pd-server/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: 'bstring.h' file not found
+#include <bstring.h>
+         ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_0c52d.dir/CheckIncludeFiles.c.o] Error 1
+make: *** [cmTC_0c52d/fast] Error 2
+
+Source:
+/* */
+#include <bstring.h>
+
+
+int main(void){return 0;}
+

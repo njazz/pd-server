@@ -68,10 +68,11 @@ ServerObject::ServerObject(ServerObject* parent, string text)
 
     _errorBox = (!_pdObject);
 
-    if (cmp_is_abstraction((t_object*)_pdObject))
-        setType(typeAbstraction);
-    else
-        setType(typeObject);
+    //setType(typeObject);
+
+    if (_pdObject)
+        if (cmp_is_abstraction((t_object*)_pdObject))
+            setType(typeAbstraction);
 }
 
 //void ServerObject::setParent(ServerObject* parent) { _parent = parent; };
@@ -117,7 +118,7 @@ int ServerObject::outletCount()
 void ServerObject::registerObserver(Observer* o)
 {
     objectObservers[(long)_pdObject] = o;
-    std::cout <<" ^^^ registered observer: " << (long) o << " for " << (long)_pdObject <<"\n";
+    std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
 };
 
 void ServerObject::deleteObserver()
@@ -136,8 +137,9 @@ ServerProperties* ServerObject::properties() { return _properties; };
 //};
 
 // ----------------------------------------
-ServerArray::ServerArray()
+ServerArray::ServerArray(string name, int size)
 {
+    _name = name;
     _size = 0;
 }
 int ServerArray::size()
@@ -176,7 +178,11 @@ void* ServerCanvas::canvasObject()
 
 ServerCanvas* ServerCanvas::createEmptySubCanvas(){};
 
-ServerArray* ServerCanvas::createArray(){};
+ServerArray* ServerCanvas::createArray(string arrayName, int size){
+    ServerArray* ret = new ServerArray (arrayName, size);
+
+    return ret;
+};
 void ServerCanvas::deleteArray(ServerArray* a){};
 
 ServerPatchcord* ServerCanvas::patchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx)
@@ -365,15 +371,11 @@ void qtpdUpdate(long objectId, AtomList list)
         if (o) {
             o->setData(list);
             o->update();
-        }
-        else
-        {
+        } else {
             cmp_post("observer not found");
         }
         //cmp_post("updated obj");
-    }
-    else
-    {
+    } else {
         std::cout << "object not found: " << objectId << "\n";
         std::cout << "observers count: " << objectObservers.size() << "\n";
     }

@@ -115,9 +115,9 @@ public:
 
 class ServerArray : ServerObject {
     int _size;
-
+    string _name;
 public:
-    ServerArray();
+    explicit ServerArray(string name, int size);
 
     int size();
     void setSize(int size);

@@ -340,7 +340,7 @@ AtomList Observer::data(){AtomList ret = *_data; return ret;};
 
 void qtpdUpdate(AtomList list)
 {
-    cmp_post("qtpd update>>");
+    //cmp_post("qtpd update>>");
 
     map<long, Observer*>::iterator it;
 
@@ -352,7 +352,7 @@ void qtpdUpdate(AtomList list)
             Observer* o = it->second;
             o->setData(list);
             o->update();
-            cmp_post("updated obj");
+            //cmp_post("updated obj");
         }
     }
 }

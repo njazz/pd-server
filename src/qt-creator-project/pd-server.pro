@@ -128,6 +128,8 @@ SOURCES += \
     ../../pure-data-src/src/x_vexp.c \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.cpp \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.cpp \
+#    ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.cpp \
+#    ../../pure-data-src/ceammc/ext/src/lib/ceammc_format.cpp \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp
 
 HEADERS +=\
@@ -151,6 +153,8 @@ HEADERS +=\
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.h \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
+#    ../../pure-data-src/ceammc/ext/src/lib/ceammc_format.h \
+#    ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.h \
     ../pdUpdate.hpp
 
 unix {

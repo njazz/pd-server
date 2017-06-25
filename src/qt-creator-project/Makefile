@@ -132,6 +132,7 @@ SOURCES       = ../pdLib.cpp \
 		../../pure-data-src/src/x_vexp.c \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.cpp \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.cpp \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_property.cpp \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp 
 OBJECTS       = pdLib.o \
 		pdServer.o \
@@ -217,6 +218,7 @@ OBJECTS       = pdLib.o \
 		x_vexp.o \
 		ceammc_atom.o \
 		ceammc_atomlist.o \
+		ceammc_property.o \
 		ceammc_log.o
 DIST          = /Volumes/Seagate2Tb/Qt/5.8/clang_64/mkspecs/features/spec_pre.prf \
 		/Volumes/Seagate2Tb/Qt/5.8/clang_64/mkspecs/qdevice.pri \
@@ -387,6 +389,8 @@ DIST          = /Volumes/Seagate2Tb/Qt/5.8/clang_64/mkspecs/features/spec_pre.pr
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_format.h \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_property.h \
 		../pdUpdate.hpp ../pdLib.cpp \
 		../pdServer.cpp \
 		../../pure-data-src/src/d_arithmetic.c \
@@ -471,6 +475,7 @@ DIST          = /Volumes/Seagate2Tb/Qt/5.8/clang_64/mkspecs/features/spec_pre.pr
 		../../pure-data-src/src/x_vexp.c \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.cpp \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.cpp \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_property.cpp \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp
 QMAKE_TARGET  = pd-server
 DESTDIR       = 
@@ -1237,6 +1242,14 @@ ceammc_atomlist.o: ../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.cpp ..
 		../../pure-data-src/src/m_pd.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ceammc_atomlist.o ../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.cpp
+
+ceammc_property.o: ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.cpp ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.h \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.h \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
+		../../pure-data-src/src/m_pd.h \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_format.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ceammc_property.o ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.cpp
 
 ceammc_log.o: ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_object.h \

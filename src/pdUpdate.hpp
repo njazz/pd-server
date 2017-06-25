@@ -5,6 +5,6 @@
 
 using namespace ceammc;
 
-extern void qtpdUpdate (AtomList list);
+extern void qtpdUpdate (long objectId, AtomList list);
 
 #endif // PDUPDATE_H

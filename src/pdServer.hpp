@@ -164,7 +164,7 @@ public:
     vector<ServerObject*> getObjectList();
     vector<ServerPatchcord*> getConnectionList();
     virtual void registerObserver(Observer* o);
-    virtual void deleteObserver(Observer* o);
+    virtual void deleteObserver();
     ServerPath path();
 
     void loadbang();

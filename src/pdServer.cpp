@@ -114,6 +114,7 @@ int ServerObject::outletCount()
 void ServerObject::registerObserver(Observer* o)
 {
     objectObservers[(long)_pdObject] = o;
+    std::cout <<" ^^^ registered observer: " << (long) o << " for " << (long)_pdObject <<"\n";
 };
 
 void ServerObject::deleteObserver()
@@ -192,7 +193,7 @@ vector<ServerPatchcord*> ServerCanvas::getConnectionList()
 };
 
 void ServerCanvas::registerObserver(Observer* o){};
-void ServerCanvas::deleteObserver(Observer* o){};
+void ServerCanvas::deleteObserver(){};
 
 ServerPath ServerCanvas::path()
 {
@@ -333,27 +334,41 @@ Observer::Observer()
     _data = new AtomList;
 }
 
-void Observer::setData(AtomList data){*_data = data;};
-AtomList Observer::data(){AtomList ret = *_data; return ret;};
+void Observer::setData(AtomList data) { *_data = data; };
+AtomList Observer::data()
+{
+    AtomList ret = *_data;
+    return ret;
+};
 
 // ---------------------------------------
 
-void qtpdUpdate(AtomList list)
+void qtpdUpdate(long objectId, AtomList list)
 {
     //cmp_post("qtpd update>>");
 
-    map<long, Observer*>::iterator it;
+    //map<long, Observer*>::iterator it;
 
-    for (it=objectObservers.begin(); it!=objectObservers.end(); ++it)
-    {
+    //for (it=objectObservers.begin(); it!=objectObservers.end(); ++it)
+    //{
 
-        if (it->second)
-        {
-            Observer* o = it->second;
+    if (objectObservers[objectId]) {
+        Observer* o = objectObservers[objectId];
+        if (o) {
             o->setData(list);
             o->update();
-            //cmp_post("updated obj");
         }
+        else
+        {
+            cmp_post("observer not found");
+        }
+        //cmp_post("updated obj");
     }
-}
+    else
+    {
+        std::cout << "object not found: " << objectId << "\n";
+        std::cout << "observers count: " << objectObservers.size() << "\n";
+    }
 
+    //}
+}

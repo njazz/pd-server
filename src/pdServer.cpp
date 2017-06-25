@@ -68,7 +68,10 @@ ServerObject::ServerObject(ServerObject* parent, string text)
 
     _errorBox = (!_pdObject);
 
-    setType(typeObject);
+    if (cmp_is_abstraction((t_object*)_pdObject))
+        setType(typeAbstraction);
+    else
+        setType(typeObject);
 }
 
 //void ServerObject::setParent(ServerObject* parent) { _parent = parent; };

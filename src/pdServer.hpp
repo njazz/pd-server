@@ -1,9 +1,9 @@
 #ifndef PDSERVERPROTOTYPE_H
 #define PDSERVERPROTOTYPE_H
 
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
 namespace ceammc {
 class AtomList;
@@ -19,6 +19,7 @@ typedef vector<string> ServerPath;
 class Observer {
 private:
     AtomList* _data;
+
 public:
     Observer();
     virtual void update();
@@ -69,7 +70,8 @@ public:
 
 enum ServerObjectType { typeObject,
     typeCanvas,
-    typeArray };
+    typeArray,
+    typeAbstraction };
 
 //class t_pd;
 
@@ -85,7 +87,7 @@ public:
     // temporary
     void* _pdObject;
 
-    bool errorBox(){return _errorBox;}
+    bool errorBox() { return _errorBox; }
 
     ServerObject();
 
@@ -242,7 +244,5 @@ class LocalServer : public TheServer {
 };
 
 // --------------------------------------
-
-
 
 #endif // PDSERVERPROTOTYPE_H

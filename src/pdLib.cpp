@@ -284,11 +284,13 @@ t_canvas* cmp_new_patch()
         std::cout << "pd_this ERROR!\n";
     }
 
-    ret = pd_this->pd_canvaslist;
+    //ret = pd_this->pd_canvaslist;
 
     cout << "new canvas: %x" << ret << "\n";
 
     //pd_typedmess((t_pd*)ret, gensym("dsp"), 1, AtomList(Atom(1.0f)).toPdData());
+
+    canvas_vis(ret,1);
 
     return ret;
 }
@@ -364,15 +366,15 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
         return 0;
     }
 
-    //list->insert(0, Atom((float)x));
-    //list->insert(1, Atom((float)y));
+    list->insert(0, Atom((float)x));
+    list->insert(1, Atom((float)y));
 
-    //ret1 = (t_object*)pd_newest();
+    ret1 = (t_object*)pd_newest();
 
-    //pd_typedmess((t_pd*)canvas, gensym("obj"), (int)list->size(), list->toPdData());
+    pd_typedmess((t_pd*)canvas, gensym("obj"), (int)list->size(), list->toPdData());
 
     // *****************
-
+    /*
     t_symbol* OBJ_NAME = list->at(0).asSymbol(); // gensym(list->at(0).asString());
     t_object* obj_ = 0;
     t_methodentry* m = pd_objectmaker->c_methods;
@@ -419,6 +421,16 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
     }
 
     //assert(obj_);
+    */
+
+    t_object* obj_ = (t_object*)pd_newest();
+
+    if (obj_==ret1)
+    {
+        cout << "object creation error\n";
+        return 0;
+    }
+
 
     if (!obj_) {
         cout << "object creation error\n";
@@ -430,6 +442,11 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
     //ret1 = obj_;
 
     // *****************
+
+
+
+
+
     //    t_gobj* last = ((t_canvas*)canvas)->gl_list;
 
     //    int fuse_c = 10000;
@@ -461,12 +478,11 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
     //    delete bufp;
     //
 
-    std::cout << "class name: " << obj_->te_g.g_pd->c_name->s_name << std::endl;
+    //std::cout << "class name: " << obj_->te_g.g_pd->c_name->s_name << std::endl;
     //std::cout << "class help name: " << ((t_class*)ret2)->c_helpname->s_name << std::endl;
 
     //delete list;
 
-    // t_object BREAKS HERE
     return obj_;
 }
 

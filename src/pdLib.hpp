@@ -88,7 +88,7 @@ extern int cmp_loadlib(std::string lib);
 /// \brief creates new t_canvas
 /// \return new canvas or 0 if failed
 ///
-extern "C" t_canvas* cmp_newpatch();
+extern "C" t_canvas* cmp_new_patch();
 
 ////
 /// \brief creates canvas from file. TODO probably unused with parser on client app.

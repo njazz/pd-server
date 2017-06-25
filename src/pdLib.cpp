@@ -25,7 +25,7 @@ EXTERN void setup_ui0x2emsg();
 EXTERN void setup_list0x2eproduct();
 
 //temporary
-t_canvas* cmp_newpatch();
+//t_canvas* cmp_newpatch();
 void cmp_closepatch(t_canvas* canvas);
 
 //temporary
@@ -130,7 +130,7 @@ void cmp_pdinit()
 
     pd_init();
 
-    sys_set_audio_api(API_PORTAUDIO); //
+    sys_set_audio_api(API_PORTAUDIO); // API_PORTAUDIO
     sys_searchpath = NULL;
     sys_startgui(NULL);
 
@@ -173,7 +173,7 @@ void cmp_pdinit()
     //    setup_ui0x2eslider();
     //    setup_ui0x2espectroscope_tilde();
 
-    cout << ("pd extras\n");
+    //cout << ("pd extras\n");
 
     // init audio
     int indev[MAXAUDIOINDEV], inch[MAXAUDIOINDEV],
@@ -190,7 +190,7 @@ void cmp_pdinit()
     sys_reopen_audio();
 
     //hack lol - removes empty canvas with array template and creates an empty new one
-    cmp_closepatch(cmp_newpatch());
+    cmp_closepatch(cmp_new_patch());
 
     cout << ("## cm_pd: %x") << pd_this << "\n";
 
@@ -251,9 +251,9 @@ void cmp_clear_searchpath()
 
 // --------------------------------
 
-t_canvas* cmp_newpatch()
+t_canvas* cmp_new_patch()
 {
-    cout << ("new patch for pd instance: %x") << (long)pd_this << "\n";
+    cout << ("## new patch for pd instance: %x") << pd_this << "\n";
 
     AtomList* list = new AtomList;
     *list = Atom(gensym("Untitled-1"));
@@ -274,15 +274,21 @@ t_canvas* cmp_newpatch()
 
         ret = pd_this->pd_canvaslist->gl_next;
 
-        while (ret->gl_next)
+        while (ret->gl_next) {
+            std::cout << "canvas: " << ret << "\n";
             ret = ret->gl_next;
+        }
 
-        std::cout << "pd_this: " << pd_this << "\n";
+        //std::cout << "pd_this: " << pd_this << "\n";
     } else {
         std::cout << "pd_this ERROR!\n";
     }
 
-    cout << ("new canvas: %x") << (long)ret << "\n";
+    ret = pd_this->pd_canvaslist;
+
+    cout << "new canvas: %x" << ret << "\n";
+
+    //pd_typedmess((t_pd*)ret, gensym("dsp"), 1, AtomList(Atom(1.0f)).toPdData());
 
     return ret;
 }
@@ -595,7 +601,7 @@ void cmp_switch_dsp(bool on)
         return;
     }
 
-    cout << ("## pd_this: %x") << pd_this << "\n";
+    cout << "## pd_this: %x" << pd_this << "\n";
 
     AtomList list;
     list.append(Atom(on ? 1.0f : 0.0f));
@@ -608,6 +614,13 @@ void cmp_switch_dsp(bool on)
     };
 
     pd_typedmess(dest, gensym("dsp"), (int)list.size(), list.toPdData());
+
+    t_canvas* ret = pd_this->pd_canvaslist->gl_next;
+
+    while (ret->gl_next) {
+        std::cout << "canvas: " << ret << "\n";
+        ret = ret->gl_next;
+    }
 };
 
 void cmp_sendstring(t_object* obj, std::string msg)

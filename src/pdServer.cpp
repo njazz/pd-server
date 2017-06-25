@@ -150,7 +150,7 @@ void ServerArray::registerObserver(Observer* o){};
 // ----------------------------------------
 ServerCanvas::ServerCanvas()
 {
-    _canvas = (void*)cmp_newpatch();
+    _canvas = (void*)cmp_new_patch();
     std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
     setType(typeCanvas);
 }

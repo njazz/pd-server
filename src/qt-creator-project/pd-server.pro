@@ -14,8 +14,8 @@ DEFINES += PDSERVER_LIBRARY \
     PD \
     HAVE_UNISTD_H \
     USEAPI_PORTAUDIO \
-    USEAPI_DUMMY \
-    THREAD_LOCKING \
+#    USEAPI_DUMMY \
+#    THREAD_LOCKING \
     HAVE_LIBDL
 
 # The following define makes your compiler emit warnings if you use
@@ -165,8 +165,9 @@ unix {
 
 INCLUDEPATH += ../../pure-data-src/ceammc/ext/src/lib/ \
             ../../pure-data-src/src/ \
-            /usr/local/include \
+            #/usr/local/include \
             ../../pure-data-src/portmidi/pm_common \
-            ../../pure-data-src/portmidi/porttime
+            ../../pure-data-src/portmidi/porttime \
+            ../../pure-data-src/portaudio/include
 
 LIBS += -L/usr/local/lib/ -lportaudio -lportmidi

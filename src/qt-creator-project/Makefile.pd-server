@@ -386,7 +386,8 @@ DIST          = /Volumes/Seagate2Tb/Qt/5.8/clang_64/mkspecs/features/spec_pre.pr
 		../../pure-data-src/src/x_vexp.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.h \
-		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h ../pdLib.cpp \
+		../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
+		../pdUpdate.hpp ../pdLib.cpp \
 		../pdServer.cpp \
 		../../pure-data-src/src/d_arithmetic.c \
 		../../pure-data-src/src/d_array.c \

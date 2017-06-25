@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace ceammc {
 class AtomList;
@@ -11,13 +12,18 @@ class AtomList;
 using namespace std;
 using namespace ceammc;
 
-typedef void (*t_updateUI)(void* uiobj, AtomList msg);
+//typedef void (*t_updateUI)(void* uiobj, AtomList msg);
 
 typedef vector<string> ServerPath;
 
 class Observer {
+private:
+    AtomList* _data;
 public:
+    Observer();
     virtual void update();
+    void setData(AtomList data);
+    AtomList data();
 };
 
 class PropertyObserver {
@@ -94,7 +100,7 @@ public:
     virtual int outletCount();
 
     virtual void registerObserver(Observer* o);
-    virtual void deleteObserver(Observer* o);
+    virtual void deleteObserver();
 
     ServerObjectType type();
     void setType(ServerObjectType type);
@@ -102,7 +108,7 @@ public:
     ServerProperties* properties();
 
     //TEMPORARY
-    void connectUI(void* uiObject, t_updateUI uiFunction);
+    //void connectUI(void* uiObject, t_updateUI uiFunction);
 };
 
 class ServerArray : ServerObject {
@@ -232,5 +238,9 @@ public:
 
 class LocalServer : public TheServer {
 };
+
+// --------------------------------------
+
+
 
 #endif // PDSERVERPROTOTYPE_H

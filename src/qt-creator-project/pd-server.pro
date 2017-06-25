@@ -150,7 +150,8 @@ HEADERS +=\
     ../../pure-data-src/src/x_vexp.h \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.h \
-    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h
+    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
+    ../pdUpdate.hpp
 
 unix {
     target.path = /usr/local/lib

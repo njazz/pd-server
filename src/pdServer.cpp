@@ -11,6 +11,9 @@ extern "C" {
 
 using namespace std;
 
+static map<long, Observer*> objectObservers;
+// ------------------------------
+
 void Observer::update(){};
 
 void PropertyObserver::update(){};
@@ -108,18 +111,25 @@ int ServerObject::outletCount()
         return -1;
 };
 
-void ServerObject::registerObserver(Observer* o){};
-void ServerObject::deleteObserver(Observer* o){};
+void ServerObject::registerObserver(Observer* o)
+{
+    objectObservers[(long)_pdObject] = o;
+};
+
+void ServerObject::deleteObserver()
+{
+    objectObservers.erase((long)_pdObject);
+};
 
 ServerObjectType ServerObject::type() { return _type; };
 void ServerObject::setType(ServerObjectType type) { _type = type; }
 
 ServerProperties* ServerObject::properties() { return _properties; };
 
-void ServerObject::connectUI(void* uiObject, t_updateUI uiFunction)
-{
-    cmp_connectUI((t_pd*)_pdObject, uiObject, uiFunction);
-};
+//void ServerObject::connectUI(void* uiObject, t_updateUI uiFunction)
+//{
+//    cmp_connectUI((t_pd*)_pdObject, uiObject, uiFunction);
+//};
 
 // ----------------------------------------
 ServerArray::ServerArray()
@@ -315,3 +325,35 @@ ServerInstance* TheServer::createInstance()
     _instances.push_back(ret);
     return ret;
 }
+
+// ---------------------------------------
+
+Observer::Observer()
+{
+    _data = new AtomList;
+}
+
+void Observer::setData(AtomList data){*_data = data;};
+AtomList Observer::data(){AtomList ret = *_data; return ret;};
+
+// ---------------------------------------
+
+void qtpdUpdate(AtomList list)
+{
+    cmp_post("qtpd update>>");
+
+    map<long, Observer*>::iterator it;
+
+    for (it=objectObservers.begin(); it!=objectObservers.end(); ++it)
+    {
+
+        if (it->second)
+        {
+            Observer* o = it->second;
+            o->setData(list);
+            o->update();
+            cmp_post("updated obj");
+        }
+    }
+}
+

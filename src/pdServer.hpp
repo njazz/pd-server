@@ -157,7 +157,7 @@ public:
 
     ServerCanvas* createEmptySubCanvas();
 
-    ServerArray* createArray();
+    ServerArray* createArray(string arrayName, int size);
     void deleteArray(ServerArray* a);
 
     ServerPatchcord* patchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx); //?

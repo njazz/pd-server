@@ -208,6 +208,8 @@ public:
 
     vector<string*> listRegisteredObjects();
 
+    void addSearchPath(string searchPath);
+
     bool loadLibrary(string libraryName);
     void loadExternal(string externalName);
 

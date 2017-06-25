@@ -278,6 +278,11 @@ ServerPath* ServerInstance::path() { return _path; };
 
 vector<string*> ServerInstance::listRegisteredObjects(){};
 
+void ServerInstance::addSearchPath(string searchPath)
+{
+    cmp_add_searchpath(gensym(searchPath.c_str()));
+}
+
 bool ServerInstance::loadLibrary(string libraryName)
 {
     bool ret = cmp_loadlib(libraryName);

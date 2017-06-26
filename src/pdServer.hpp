@@ -75,9 +75,11 @@ enum ServerObjectType { typeObject,
 
 //class t_pd;
 
+class ServerCanvas;
+
 class ServerObject {
 private:
-    ServerObject* _parent;
+    ServerCanvas* _parent;
     ServerObjectType _type;
     ServerProperties* _properties;
 
@@ -91,9 +93,9 @@ public:
 
     ServerObject();
 
-    explicit ServerObject(ServerObject* parent, string text);
+    explicit ServerObject(ServerCanvas* parent, string text);
 
-    virtual ServerObject* parent();
+    virtual ServerCanvas* parent();
 
     //void message(const AtomList& list);
     void message(string str);
@@ -113,16 +115,27 @@ public:
     //void connectUI(void* uiObject, t_updateUI uiFunction);
 };
 
+typedef struct _serverArrayData
+{
+    int size;
+    float* sample;
+} ServerArrayData;
+
 class ServerArray : ServerObject {
     int _size;
     string _name;
+
+    ServerCanvas* _parent;
+
+    void* _pdArray;
+
 public:
-    explicit ServerArray(string name, int size);
+    explicit ServerArray(ServerCanvas* parent, string name, int size);
 
     int size();
     void setSize(int size);
 
-    bool getData(float* dest, size_t n);
+    ServerArrayData* getData();//float* dest, size_t n);
     virtual void registerObserver(Observer* o);
 };
 
@@ -136,7 +149,7 @@ class ServerInstance;
 
 class ServerCanvas : public ServerObject {
 private:
-    void* _canvas;
+    struct _glist* _canvas;
 
     vector<ServerObject*> _objects;
     vector<ServerPatchcord*> _patchcords;
@@ -153,7 +166,7 @@ public:
     ServerObject* createObject(string name); // Object* || Canvas*
     void deleteObject(ServerObject* o);
 
-    void* canvasObject();
+    struct _glist* canvasObject();
 
     ServerCanvas* createEmptySubCanvas();
 

@@ -9,6 +9,9 @@ extern "C" {
 #include "m_imp.h"
 }
 
+//TEMPORARY
+#include "math.h"
+
 using namespace std;
 
 static map<long, Observer*> objectObservers;
@@ -34,7 +37,7 @@ ServerObject::ServerObject()
     _errorBox = false;
 }
 
-ServerObject::ServerObject(ServerObject* parent, string text)
+ServerObject::ServerObject(ServerCanvas* parent, string text)
 {
 
     _parent = parent;
@@ -44,9 +47,10 @@ ServerObject::ServerObject(ServerObject* parent, string text)
 
     if (parent->type() == typeCanvas) {
 
-        ServerCanvas* p = dynamic_cast<ServerCanvas*>(parent);
-        assert(p);
-        t_canvas* canvas = static_cast<t_canvas*>(p->canvasObject());
+        //        ServerCanvas* p = dynamic_cast<ServerCanvas*>(parent);
+        //        assert(p);
+
+        t_canvas* canvas = (parent->canvasObject());
 
         t_object* obj = cmp_create_object(canvas, text, 0, 0);
 
@@ -64,6 +68,8 @@ ServerObject::ServerObject(ServerObject* parent, string text)
             //t_class
             std::cout << "class name after object is created (pointer): " << cl->c_name->s_name << "\n";
         }
+    } else {
+        cmp_post("ServerCanvas error!");
     }
 
     _errorBox = (!_pdObject);
@@ -76,7 +82,7 @@ ServerObject::ServerObject(ServerObject* parent, string text)
 }
 
 //void ServerObject::setParent(ServerObject* parent) { _parent = parent; };
-ServerObject* ServerObject::parent() { return _parent; };
+ServerCanvas* ServerObject::parent() { return _parent; };
 
 // TEMPORARY
 #include "m_imp.h"
@@ -137,27 +143,79 @@ ServerProperties* ServerObject::properties() { return _properties; };
 //};
 
 // ----------------------------------------
-ServerArray::ServerArray(string name, int size)
+ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
 {
     _name = name;
-    _size = 0;
+    _size = size;
+
+    _parent = parent;
+
+    if (!_parent->canvasObject()) {
+        ServerInstance::post("ServerArray: bad Pd canvas pointer!");
+        //return false;
+    }
+
+    //std::cout << "Array: Pd canvas: " << parent->canvasObject() << "\n";
+
+    _pdArray = cmp_new_array(_parent->canvasObject(), gensym(_name.c_str()), float(_size), 1, 1);
+
+    if (!_pdArray) {
+        ServerInstance::post("Pd array not created!");
+
+    }
 }
 int ServerArray::size()
 {
+    return _size;
 }
 void ServerArray::setSize(int size)
 {
+    _size = size;
 }
 
-bool ServerArray::getData(float* dest, size_t n){};
+ServerArrayData* ServerArray::getData()//float* dest, size_t n)
+{
+    ServerArrayData* ret = new ServerArrayData;
+
+    //int _arrSize = _size;
+    if (!_pdArray) {
+        ServerInstance::post("bad array pointer!");
+        return 0;
+    }
+
+    ret->size = _size;
+
+    ret->sample = new float[_size];
+
+    //TEST
+//    for (int i=0;i<_size;i++)
+//    {
+//        ret->sample[i] = sinf(float(i)/_size*6.28);
+//    }
+
+    if (cmp_get_array_size((t_garray*)_pdArray) != _size)
+    {
+        ServerInstance::post("Array size error");
+    }
+
+    ret->sample = cmp_get_array_data((t_garray*)_pdArray);//, &_size, (t_word**)&ret->sample);
+
+    return ret;
+};
+
 void ServerArray::registerObserver(Observer* o){};
 
 // ----------------------------------------
 ServerCanvas::ServerCanvas()
 {
-    _canvas = (void*)cmp_new_patch();
-    std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
+    _canvas = cmp_new_patch();
+    //std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
     setType(typeCanvas);
+
+    if (!_canvas)
+        ServerInstance::post("bad Pd canvas pointer!");
+
+    //std::cout << "New pd canvas: " << _canvas << "\n";
 }
 
 ServerObject* ServerCanvas::createObject(string name)
@@ -171,15 +229,16 @@ void ServerCanvas::deleteObject(ServerObject* o){
     // TODO
 };
 
-void* ServerCanvas::canvasObject()
+t_canvas* ServerCanvas::canvasObject()
 {
     return _canvas;
 }
 
 ServerCanvas* ServerCanvas::createEmptySubCanvas(){};
 
-ServerArray* ServerCanvas::createArray(string arrayName, int size){
-    ServerArray* ret = new ServerArray (arrayName, size);
+ServerArray* ServerCanvas::createArray(string arrayName, int size)
+{
+    ServerArray* ret = new ServerArray(this, arrayName, size);
 
     return ret;
 };

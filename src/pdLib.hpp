@@ -278,6 +278,7 @@ t_garray* cmp_get_array(t_symbol* arrayname);
 /// \param vec
 ///
 void cmp_get_array_data(t_garray* a, int* size, t_word** vec);
+float* cmp_get_array_data(t_garray* a);
 
 ////
 /// \brief get Pd array size

@@ -639,6 +639,8 @@ void cmp_switch_dsp(bool on)
     }
 };
 
+// -------------------------------------------
+
 void cmp_sendstring(t_object* obj, std::string msg)
 {
     std::cout << "\n ||| sendstring " << std::endl;
@@ -679,13 +681,13 @@ void cmp_post(std::string text)
     post("%s", text.c_str());
 }
 
-void cmp_connectUI(t_pd* obj, void* uiobj, t_updateUI func)
-{
-    // fix that !!!
+//void cmp_connectUI(t_pd* obj, void* uiobj, t_updateUI func)
+//{
+//    // fix that !!!
 
-    // TODO
-    //uimsg_set_updateUI(obj, uiobj, func);
-}
+//    // TODO
+//    //uimsg_set_updateUI(obj, uiobj, func);
+//}
 
 // ---------------------------------------------
 // arrays
@@ -699,7 +701,14 @@ t_garray* cmp_get_array(t_symbol* arrayname)
 //todo
 void cmp_get_array_data(t_garray* a, int* size, t_word** vec)
 {
+    //
     garray_getfloatwords(a, size, vec);
+
+}
+
+float* cmp_get_array_data(t_garray* a)
+{
+   return (float*)garray_vec(a);
 }
 
 int cmp_get_array_size(t_garray* a)
@@ -716,6 +725,8 @@ t_garray* cmp_new_array(t_canvas* c, t_symbol* name, t_floatarg size, t_floatarg
     ret = cmp_get_array(name); //(t_garray*)pd_newest();
     return ret;
 }
+
+// --------------------------------
 
 void cmp_set_verbose(int v)
 {

@@ -12,7 +12,7 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DPDSERVER_LIBRARY -DAPPLE -DPD -DHAVE_UNISTD_H -DUSEAPI_PORTAUDIO -DHAVE_LIBDL -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG
+DEFINES       = -DPDSERVER_LIBRARY -DAPPLE -DPD -DHAVE_UNISTD_H -DUSEAPI_PORTAUDIO -DTHREAD_LOCKING -DHAVE_LIBDL -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG
 CFLAGS        = -pipe -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.9 $(EXPORT_QMAKE_XARCH_CFLAGS) -g -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.9 $(EXPORT_QMAKE_XARCH_CFLAGS) -g -std=gnu++11 -Wall -W -fPIC $(DEFINES)
 INCPATH       = -I. -I../../pure-data-src/ceammc/ext/src/lib -I../../pure-data-src/src -I../../pure-data-src/portmidi/pm_common -I../../pure-data-src/portmidi/porttime -I../../pure-data-src/portaudio/include -I/Volumes/Seagate2Tb/Qt/5.8/clang_64/mkspecs/macx-clang

@@ -173,7 +173,7 @@ public:
     ServerArray* createArray(string arrayName, int size);
     void deleteArray(ServerArray* a);
 
-    ServerPatchcord* patchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx); //?
+    ServerPatchcord* createPatchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx); //?
     void disconnect(ServerPatchcord* p); //??
 
     vector<ServerObject*> getObjectList();

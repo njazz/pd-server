@@ -244,7 +244,7 @@ ServerArray* ServerCanvas::createArray(string arrayName, int size)
 };
 void ServerCanvas::deleteArray(ServerArray* a){};
 
-ServerPatchcord* ServerCanvas::patchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx)
+ServerPatchcord* ServerCanvas::createPatchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx)
 {
     cmp_patchcord((t_object*)src->_pdObject, srcIdx, (t_object*)dest->_pdObject, destIdx);
 };

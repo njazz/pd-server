@@ -146,7 +146,7 @@ ServerProperties* ServerObject::properties() { return _properties; };
 ServerCanvas* ServerObject::toServerCanvas()
 {
     bool isCanvas;
-    ServerCanvas* ret;
+    ServerCanvas* ret = 0;
 
     if (!_pdObject) {
         isCanvas = false;
@@ -154,7 +154,7 @@ ServerCanvas* ServerObject::toServerCanvas()
         isCanvas = cmp_is_canvas(_pdObject);
 
     if (isCanvas) {
-        ret = new ServerCanvas((t_canvas*)_pdObject);
+        ret = new ServerCanvas((t_canvas*)(_pdObject));
 
     }
 
@@ -238,7 +238,7 @@ ServerCanvas::ServerCanvas()
 
 ServerCanvas::ServerCanvas(t_canvas* canvas)
 {
-    _canvas = _canvas;
+    _canvas = canvas;
     //std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
     setType(typeCanvas);
 

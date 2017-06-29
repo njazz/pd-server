@@ -93,6 +93,7 @@ public:
     bool errorBox() { return _errorBox; }
 
     ServerObject();
+    ServerObject(t_object* pdObject);
 
     explicit ServerObject(ServerCanvas* parent, string text);
 
@@ -188,6 +189,8 @@ public:
     ServerPath path();
 
     void loadbang();
+
+    ServerObject* toServerObject();
 };
 
 class ServerAudioDevice {

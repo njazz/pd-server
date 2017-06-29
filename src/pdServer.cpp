@@ -37,6 +37,15 @@ ServerObject::ServerObject()
     _errorBox = false;
 }
 
+ServerObject::ServerObject(t_object* pdObject)
+{
+    _parent = 0;
+    _pdObject = pdObject;
+    _type = typeObject;
+    _properties = 0;
+    _errorBox = false;
+}
+
 ServerObject::ServerObject(ServerCanvas* parent, string text)
 {
 
@@ -123,8 +132,11 @@ int ServerObject::outletCount()
 
 void ServerObject::registerObserver(Observer* o)
 {
-    objectObservers[(long)_pdObject] = o;
-    std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
+    if (_pdObject) {
+        std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
+        objectObservers[(long)_pdObject] = o;
+
+    }
 };
 
 void ServerObject::deleteObserver()
@@ -155,11 +167,9 @@ ServerCanvas* ServerObject::toServerCanvas()
 
     if (isCanvas) {
         ret = new ServerCanvas((t_canvas*)(_pdObject));
-
     }
 
     return ret;
-
 }
 
 // ----------------------------------------
@@ -243,11 +253,9 @@ ServerCanvas::ServerCanvas(t_canvas* canvas)
     setType(typeCanvas);
 
     // extra
-    if (!_canvas)
-    {
+    if (!_canvas) {
         ServerInstance::post("bad Pd canvas pointer!");
     }
-
 }
 
 ServerObject* ServerCanvas::createObject(string name)
@@ -304,6 +312,23 @@ void ServerCanvas::loadbang()
 {
     if (_pdObject)
         cmp_loadbang((t_canvas*)_pdObject);
+}
+
+ServerObject* ServerCanvas::toServerObject()
+{
+    //bool isCanvas;
+    ServerObject* ret = 0;
+
+//    if (!_pdObject) {
+//        isCanvas = false;
+//    } else
+//        isCanvas = cmp_is_canvas(_pdObject);
+
+    //if (_pdObject) {
+        ret = new ServerObject((t_object*)(_pdObject));
+    //}
+
+    return ret;
 }
 
 // -----------------------------------------------

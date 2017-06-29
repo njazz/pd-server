@@ -218,6 +218,11 @@ bool cmp_is_abstraction(t_object* x)
     return ((pd_class(&x->te_pd) == canvas_class) && canvas_isabstraction((t_canvas*)x));
 }
 
+bool cmp_is_canvas(t_object* x)
+{
+    return (pd_class(&x->te_pd) == canvas_class);
+}
+
 t_symbol* cmp_get_path(t_canvas* c)
 {
     return canvas_getdir(c);

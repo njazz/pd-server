@@ -56,7 +56,7 @@ ServerObject::ServerObject(ServerCanvas* parent, string text)
 
         //t_class* cl = (t_class*)obj;
 
-        _pdObject = (void*)obj;
+        _pdObject = obj;
 
         std::cout << "|||||||||| new object on canvas: " << canvas << " || pd object ptr " << _pdObject << std::endl;
 
@@ -142,6 +142,26 @@ ServerProperties* ServerObject::properties() { return _properties; };
 //    cmp_connectUI((t_pd*)_pdObject, uiObject, uiFunction);
 //};
 
+// if the object is a subpatch, creates a new server object with it and returns it
+ServerCanvas* ServerObject::toServerCanvas()
+{
+    bool isCanvas;
+    ServerCanvas* ret;
+
+    if (!_pdObject) {
+        isCanvas = false;
+    } else
+        isCanvas = cmp_is_canvas(_pdObject);
+
+    if (isCanvas) {
+        ret = new ServerCanvas((t_canvas*)_pdObject);
+
+    }
+
+    return ret;
+
+}
+
 // ----------------------------------------
 ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
 {
@@ -161,7 +181,6 @@ ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
 
     if (!_pdArray) {
         ServerInstance::post("Pd array not created!");
-
     }
 }
 int ServerArray::size()
@@ -173,7 +192,7 @@ void ServerArray::setSize(int size)
     _size = size;
 }
 
-ServerArrayData* ServerArray::getData()//float* dest, size_t n)
+ServerArrayData* ServerArray::getData() //float* dest, size_t n)
 {
     ServerArrayData* ret = new ServerArrayData;
 
@@ -188,17 +207,16 @@ ServerArrayData* ServerArray::getData()//float* dest, size_t n)
     ret->sample = new float[_size];
 
     //TEST
-//    for (int i=0;i<_size;i++)
-//    {
-//        ret->sample[i] = sinf(float(i)/_size*6.28);
-//    }
+    //    for (int i=0;i<_size;i++)
+    //    {
+    //        ret->sample[i] = sinf(float(i)/_size*6.28);
+    //    }
 
-    if (cmp_get_array_size((t_garray*)_pdArray) != _size)
-    {
+    if (cmp_get_array_size((t_garray*)_pdArray) != _size) {
         ServerInstance::post("Array size error");
     }
 
-    ret->sample = cmp_get_array_data((t_garray*)_pdArray);//, &_size, (t_word**)&ret->sample);
+    ret->sample = cmp_get_array_data((t_garray*)_pdArray); //, &_size, (t_word**)&ret->sample);
 
     return ret;
 };
@@ -216,6 +234,20 @@ ServerCanvas::ServerCanvas()
         ServerInstance::post("bad Pd canvas pointer!");
 
     //std::cout << "New pd canvas: " << _canvas << "\n";
+}
+
+ServerCanvas::ServerCanvas(t_canvas* canvas)
+{
+    _canvas = _canvas;
+    //std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
+    setType(typeCanvas);
+
+    // extra
+    if (!_canvas)
+    {
+        ServerInstance::post("bad Pd canvas pointer!");
+    }
+
 }
 
 ServerObject* ServerCanvas::createObject(string name)

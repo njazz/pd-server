@@ -76,6 +76,7 @@ enum ServerObjectType { typeObject,
 //class t_pd;
 
 class ServerCanvas;
+typedef struct _text t_object;
 
 class ServerObject {
 private:
@@ -87,7 +88,7 @@ private:
 
 public:
     // temporary
-    void* _pdObject;
+    t_object* _pdObject;
 
     bool errorBox() { return _errorBox; }
 
@@ -110,6 +111,8 @@ public:
     void setType(ServerObjectType type);
 
     ServerProperties* properties();
+
+    ServerCanvas* toServerCanvas();
 
     //TEMPORARY
     //void connectUI(void* uiObject, t_updateUI uiFunction);
@@ -146,6 +149,7 @@ public:
 // ----------------------------------------
 
 class ServerInstance;
+//typedef struct _glist t_canvas;
 
 class ServerCanvas : public ServerObject {
 private:
@@ -159,6 +163,7 @@ private:
 
 public:
     ServerCanvas();
+    ServerCanvas(struct _glist* canvas);
 
     void setParentInstance(ServerInstance* p) { _parentInstance = p; }
     ServerInstance* parentInstance() { return _parentInstance; }

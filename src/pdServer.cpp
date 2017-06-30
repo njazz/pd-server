@@ -135,7 +135,6 @@ void ServerObject::registerObserver(Observer* o)
     if (_pdObject) {
         std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
         objectObservers[(long)_pdObject] = o;
-
     }
 };
 
@@ -319,13 +318,13 @@ ServerObject* ServerCanvas::toServerObject()
     //bool isCanvas;
     ServerObject* ret = 0;
 
-//    if (!_pdObject) {
-//        isCanvas = false;
-//    } else
-//        isCanvas = cmp_is_canvas(_pdObject);
+    //    if (!_pdObject) {
+    //        isCanvas = false;
+    //    } else
+    //        isCanvas = cmp_is_canvas(_pdObject);
 
     //if (_pdObject) {
-        ret = new ServerObject((t_object*)(_pdObject));
+    ret = new ServerObject((t_object*)(_pdObject));
     //}
 
     return ret;
@@ -433,6 +432,7 @@ void ServerInstance::setVerboseLevel(int level)
 ServerAudioDevice* ServerInstance::audioDevice() { return _audioDevice; };
 ServerMIDIDevice* ServerInstance::midiDevice() { return _midiDevice; };
 
+string ServerInstance::getAudioAPIs() { return cmp_get_audio_apis(); };
 // ----------------------------------------
 
 TheServer::TheServer()

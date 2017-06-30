@@ -218,9 +218,9 @@ public:
     ServerCanvas* createCanvas();
     void deleteCanvas();
 
-    void dspOn();
-    void dspOff();
-    void dspSwitch(bool value);
+    static void dspOn();
+    static void dspOff();
+    static void dspSwitch(bool value);
 
     void registerObserver(Observer* o);
     void deleteObserver(Observer* o);
@@ -233,8 +233,8 @@ public:
 
     void addSearchPath(string searchPath);
 
-    bool loadLibrary(string libraryName);
-    void loadExternal(string externalName);
+    static bool loadLibrary(string libraryName);
+    static void loadExternal(string externalName);
 
     static void post(string text);
     static void error(string text);
@@ -244,6 +244,8 @@ public:
 
     ServerAudioDevice* audioDevice();
     ServerMIDIDevice* midiDevice();
+
+    static string getAudioAPIs();
 };
 
 // ----------------------------------------

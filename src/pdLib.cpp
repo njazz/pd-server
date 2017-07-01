@@ -91,11 +91,11 @@ using namespace std;
 
 typedef void (*t_updatePdObjectUI)(t_pd* obj, void* uiobj, AtomList msg);
 
-void cmp_error(std::string msg)
-{
-    cout << "## Pd lib error: %s\n"
-         << msg << "\n";
-}
+//void cmp_error(std::string msg)
+//{
+//    cout << "## Pd lib error: %s\n"
+//         << msg << "\n";
+//}
 
 // copied from libpd
 
@@ -103,7 +103,7 @@ void cmp_pdinit()
 {
     //pd_init();
 
-    std::cout << "##### cmp_pdinit" << std::endl;
+    //std::cout << "##### cmp_pdinit" << std::endl;
 
     // copied from libpd
     signal(SIGFPE, SIG_IGN);
@@ -215,7 +215,11 @@ void cmp_remove_searchpath(t_symbol* s)
 
 bool cmp_is_abstraction(t_object* x)
 {
-    return ((pd_class(&x->te_pd) == canvas_class) && canvas_isabstraction((t_canvas*)x));
+    bool ret = ((pd_class(&x->te_pd) == canvas_class) && canvas_isabstraction((t_canvas*)x));
+
+    cout << "is abstraction: " << ret << "\n";
+
+    return ret;
 }
 
 bool cmp_is_canvas(t_object* x)
@@ -295,7 +299,7 @@ t_canvas* cmp_new_patch()
 
     //pd_typedmess((t_pd*)ret, gensym("dsp"), 1, AtomList(Atom(1.0f)).toPdData());
 
-    canvas_vis(ret,1);
+    canvas_vis(ret, 1);
 
     return ret;
 }
@@ -430,12 +434,10 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
 
     t_object* obj_ = (t_object*)pd_newest();
 
-    if (obj_==ret1)
-    {
+    if (obj_ == ret1) {
         cout << "object creation error\n";
         return 0;
     }
-
 
     if (!obj_) {
         cout << "object creation error\n";
@@ -447,10 +449,6 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
     //ret1 = obj_;
 
     // *****************
-
-
-
-
 
     //    t_gobj* last = ((t_canvas*)canvas)->gl_list;
 
@@ -686,6 +684,16 @@ void cmp_post(std::string text)
     post("%s", text.c_str());
 }
 
+void cmp_verbose(int level, string text)
+{
+    verbose(level, text.c_str());
+}
+
+void cmp_error(string text)
+{
+    error(text.c_str());
+}
+
 //void cmp_connectUI(t_pd* obj, void* uiobj, t_updateUI func)
 //{
 //    // fix that !!!
@@ -708,12 +716,11 @@ void cmp_get_array_data(t_garray* a, int* size, t_word** vec)
 {
     //
     garray_getfloatwords(a, size, vec);
-
 }
 
 float* cmp_get_array_data(t_garray* a)
 {
-   return (float*)garray_vec(a);
+    return (float*)garray_vec(a);
 }
 
 int cmp_get_array_size(t_garray* a)

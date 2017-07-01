@@ -44,6 +44,10 @@ ServerObject::ServerObject(t_object* pdObject)
     _type = typeObject;
     _properties = 0;
     _errorBox = false;
+
+    if (_pdObject)
+        if (cmp_is_abstraction((t_object*)_pdObject))
+            setType(typeAbstraction);
 }
 
 ServerObject::ServerObject(ServerCanvas* parent, string text)
@@ -78,7 +82,7 @@ ServerObject::ServerObject(ServerCanvas* parent, string text)
             std::cout << "class name after object is created (pointer): " << cl->c_name->s_name << "\n";
         }
     } else {
-        cmp_post("ServerCanvas error!");
+        cmp_error("ServerCanvas error!");
     }
 
     _errorBox = (!_pdObject);
@@ -110,7 +114,7 @@ void ServerObject::message(string str)
         cout << "send-> " << this << " pd object:" << _pdObject << endl;
         cmp_sendstring(static_cast<t_object*>(_pdObject), *msg);
     } else {
-        cmp_post("internal pdObject error");
+        cmp_error("internal pdObject error");
         cout << "pdobject error" << endl;
     }
 };
@@ -180,7 +184,7 @@ ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
     _parent = parent;
 
     if (!_parent->canvasObject()) {
-        ServerInstance::post("ServerArray: bad Pd canvas pointer!");
+        ServerInstance::error("ServerArray: bad Pd canvas pointer!");
         //return false;
     }
 
@@ -189,7 +193,7 @@ ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
     _pdArray = cmp_new_array(_parent->canvasObject(), gensym(_name.c_str()), float(_size), 1, 1);
 
     if (!_pdArray) {
-        ServerInstance::post("Pd array not created!");
+        ServerInstance::error("Pd array not created!");
     }
 }
 int ServerArray::size()
@@ -207,7 +211,7 @@ ServerArrayData* ServerArray::getData() //float* dest, size_t n)
 
     //int _arrSize = _size;
     if (!_pdArray) {
-        ServerInstance::post("bad array pointer!");
+        ServerInstance::error("bad array pointer!");
         return 0;
     }
 
@@ -222,7 +226,7 @@ ServerArrayData* ServerArray::getData() //float* dest, size_t n)
     //    }
 
     if (cmp_get_array_size((t_garray*)_pdArray) != _size) {
-        ServerInstance::post("Array size error");
+        ServerInstance::error("Array size error");
     }
 
     ret->sample = cmp_get_array_data((t_garray*)_pdArray); //, &_size, (t_word**)&ret->sample);
@@ -240,7 +244,7 @@ ServerCanvas::ServerCanvas()
     setType(typeCanvas);
 
     if (!_canvas)
-        ServerInstance::post("bad Pd canvas pointer!");
+        ServerInstance::error("bad Pd canvas pointer!");
 
     //std::cout << "New pd canvas: " << _canvas << "\n";
 }
@@ -253,7 +257,7 @@ ServerCanvas::ServerCanvas(t_canvas* canvas)
 
     // extra
     if (!_canvas) {
-        ServerInstance::post("bad Pd canvas pointer!");
+        ServerInstance::error("bad Pd canvas pointer!");
     }
 }
 
@@ -411,18 +415,18 @@ bool ServerInstance::loadLibrary(string libraryName)
 {
     bool ret = cmp_loadlib(libraryName);
 
-    cmp_post("loading library '" + libraryName + "' ...");
+    //cmp_post("loading library '" + libraryName + "' ...");
 
-    if (!ret)
-        cmp_post("Library not loaded: " + libraryName);
+    if (ret)
+        cmp_error("Library not loaded: " + libraryName);
 
     return ret;
 };
 void ServerInstance::loadExternal(string externalName){};
 
 void ServerInstance::post(string text) { cmp_post(text); };
-void ServerInstance::error(string text) { cmp_post(text); };
-void ServerInstance::verbose(int level, string text) { cmp_post(text); };
+void ServerInstance::error(string text) { cmp_error(text); };
+void ServerInstance::verbose(int level, string text) { cmp_verbose(level, text); };
 
 void ServerInstance::setVerboseLevel(int level)
 {
@@ -475,7 +479,6 @@ AtomList Observer::data()
 
 void qtpdUpdate(long objectId, AtomList list)
 {
-    //cmp_post("qtpd update>>");
 
     //map<long, Observer*>::iterator it;
 
@@ -488,7 +491,7 @@ void qtpdUpdate(long objectId, AtomList list)
             o->setData(list);
             o->update();
         } else {
-            cmp_post("observer not found");
+            cmp_error("observer not found");
         }
         //cmp_post("updated obj");
     } else {

@@ -258,6 +258,18 @@ void cmp_connectUI(t_pd* obj, void* uiobj, t_updateUI func);
 void cmp_post(std::string text);
 
 ////
+/// \brief verbose text to Pd window
+/// \param text
+///
+void cmp_verbose(int level, std::string text);
+
+////
+/// \brief error text to Pd window
+/// \param text
+///
+void cmp_error(std::string text);
+
+////
 /// \brief set verbose level (1..5)
 /// \param v
 ///

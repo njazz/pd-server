@@ -99,7 +99,6 @@ public:
 
     virtual ServerCanvas* parent();
 
-    //void message(const AtomList& list);
     void message(string str);
 
     virtual int inletCount();

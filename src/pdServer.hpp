@@ -92,6 +92,8 @@ public:
 
     bool errorBox() { return _errorBox; }
 
+    bool hasInternalObject(){return  _pdObject!=0;}
+
     ServerObject();
     ServerObject(t_object* pdObject);
 
@@ -157,7 +159,7 @@ private:
 
     vector<ServerObject*> _objects;
     vector<ServerPatchcord*> _patchcords;
-    ServerPath _path;
+    string _path;
 
     ServerInstance* _parentInstance;
 
@@ -183,9 +185,9 @@ public:
 
     vector<ServerObject*> getObjectList();
     vector<ServerPatchcord*> getConnectionList();
-    virtual void registerObserver(Observer* o);
+    virtual void registerObserver(Observer*);
     virtual void deleteObserver();
-    ServerPath path();
+    string path();
 
     void loadbang();
 

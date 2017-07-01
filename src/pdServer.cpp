@@ -45,9 +45,12 @@ ServerObject::ServerObject(t_object* pdObject)
     _properties = 0;
     _errorBox = false;
 
-    if (_pdObject)
+    if (_pdObject) {
         if (cmp_is_abstraction((t_object*)_pdObject))
             setType(typeAbstraction);
+    } else {
+        ServerInstance::error("bad pd object");
+    }
 }
 
 ServerObject::ServerObject(ServerCanvas* parent, string text)
@@ -165,11 +168,14 @@ ServerCanvas* ServerObject::toServerCanvas()
 
     if (!_pdObject) {
         isCanvas = false;
+        ServerInstance::error("to_server_canvas: bad canvas object!");
     } else
         isCanvas = cmp_is_canvas(_pdObject);
 
     if (isCanvas) {
         ret = new ServerCanvas((t_canvas*)(_pdObject));
+    } else {
+        ServerInstance::error("object is not a canvas!");
     }
 
     return ret;
@@ -240,13 +246,13 @@ void ServerArray::registerObserver(Observer* o){};
 ServerCanvas::ServerCanvas()
 {
     _canvas = cmp_new_patch();
-    //std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
     setType(typeCanvas);
 
-    if (!_canvas)
+    if (!_canvas) {
         ServerInstance::error("bad Pd canvas pointer!");
-
-    //std::cout << "New pd canvas: " << _canvas << "\n";
+    } else {
+        _path = cmp_get_path(_canvas)->s_name;
+    }
 }
 
 ServerCanvas::ServerCanvas(t_canvas* canvas)
@@ -255,9 +261,10 @@ ServerCanvas::ServerCanvas(t_canvas* canvas)
     //std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
     setType(typeCanvas);
 
-    // extra
     if (!_canvas) {
         ServerInstance::error("bad Pd canvas pointer!");
+    } else {
+        _path = cmp_get_path(_canvas)->s_name;
     }
 }
 
@@ -303,11 +310,23 @@ vector<ServerPatchcord*> ServerCanvas::getConnectionList()
     return _patchcords;
 };
 
-void ServerCanvas::registerObserver(Observer* o){};
+void ServerCanvas::registerObserver(Observer*){};
 void ServerCanvas::deleteObserver(){};
 
-ServerPath ServerCanvas::path()
+string ServerCanvas::path()
 {
+    if (!_canvas) {
+        ServerInstance::post("canvas_path: server object error!");
+        return "";
+    }
+
+//    if (!cmp_is_canvas(_canvas)) {
+//        ServerInstance::post("canvas_path: server canvas error");
+//        return "";
+//    }
+
+    _path = cmp_get_path(_canvas)->s_name;
+
     return _path;
 };
 
@@ -319,17 +338,9 @@ void ServerCanvas::loadbang()
 
 ServerObject* ServerCanvas::toServerObject()
 {
-    //bool isCanvas;
     ServerObject* ret = 0;
 
-    //    if (!_pdObject) {
-    //        isCanvas = false;
-    //    } else
-    //        isCanvas = cmp_is_canvas(_pdObject);
-
-    //if (_pdObject) {
     ret = new ServerObject((t_object*)(_pdObject));
-    //}
 
     return ret;
 }

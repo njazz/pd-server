@@ -181,6 +181,51 @@ ServerCanvas* ServerObject::toServerCanvas()
     return ret;
 }
 
+XLetType ServerObject::getInletType(int index)
+{
+    XLetType ret;
+
+    int i = cmp_get_inlet_type(_pdObject, index);
+
+    if (i)
+        ret = XLetSignal;
+    else
+        ret = XLetMessage;
+
+    return ret;
+}
+
+XLetType ServerObject::getOutletType(int index)
+{
+    XLetType ret;
+
+    int i = cmp_get_outlet_type(_pdObject, index);
+
+    if (i)
+        ret = XLetSignal;
+    else
+        ret = XLetMessage;
+
+    return ret;
+}
+
+void ServerObject::setReceiveSymbol(string symbolName)
+{
+     _receiveSymbol = gensym(symbolName.c_str());
+
+    if (_pdObject)
+        cmp_bind_object(_pdObject, _receiveSymbol);
+
+
+}
+
+ServerObject::~ServerObject()
+{
+    if (_receiveSymbol)
+        cmp_unbind((t_pd*)_pdObject, _receiveSymbol);
+
+    cmp_deleteobject(_parent->canvasObject(),_pdObject);
+}
 // ----------------------------------------
 ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
 {
@@ -320,10 +365,10 @@ string ServerCanvas::path()
         return "";
     }
 
-//    if (!cmp_is_canvas(_canvas)) {
-//        ServerInstance::post("canvas_path: server canvas error");
-//        return "";
-//    }
+    //    if (!cmp_is_canvas(_canvas)) {
+    //        ServerInstance::post("canvas_path: server canvas error");
+    //        return "";
+    //    }
 
     _path = cmp_get_path(_canvas)->s_name;
 

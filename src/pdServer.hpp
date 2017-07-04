@@ -77,6 +77,7 @@ enum ServerObjectType { typeObject,
 
 class ServerCanvas;
 typedef struct _text t_object;
+typedef struct _symbol t_symbol;
 
 class ServerObject {
 private:
@@ -86,7 +87,15 @@ private:
 
     bool _errorBox;
 
+    t_symbol*  _receiveSymbol;
+
 public:
+
+    ServerObject();
+    ServerObject(t_object* pdObject);
+
+    ~ServerObject();
+
     // temporary
     t_object* _pdObject;
 
@@ -94,8 +103,7 @@ public:
 
     bool hasInternalObject(){return  _pdObject!=0;}
 
-    ServerObject();
-    ServerObject(t_object* pdObject);
+
 
     explicit ServerObject(ServerCanvas* parent, string text);
 
@@ -116,8 +124,10 @@ public:
 
     ServerCanvas* toServerCanvas();
 
-    //TEMPORARY
-    //void connectUI(void* uiObject, t_updateUI uiFunction);
+    XLetType getInletType(int index);
+    XLetType getOutletType(int index);
+
+    void setReceiveSymbol(string symbolName);
 };
 
 typedef struct _serverArrayData
@@ -197,6 +207,7 @@ public:
 class ServerAudioDevice {
 public:
 };
+
 class ServerMIDIDevice {
 public:
 };

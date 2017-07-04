@@ -7,10 +7,9 @@
 #include <ceammc_atomlist.h>
 
 extern "C" {
-#include <m_pd.h>
 #include <m_imp.h>
+#include <m_pd.h>
 }
-
 
 #include <map>
 
@@ -329,21 +328,18 @@ EXTERN void cmp_loadbang(t_canvas* canvas);
 //    bool hasCallback;
 //} t_cmp_audio_info;
 
-////
-/// \brief get audio info structure
-/// \return
-///
-t_cmp_audio_info* cmp_get_audio_device_info();
-
-////
-/// \brief get list of audio api names as Tcl string {{api name} {api name 2} ...}
-/// \return
-///
-std::string cmp_get_audio_apis();
+t_cmp_audio_info* cmp_get_audio_device_info(); ///> get audio info structure
+std::string cmp_get_audio_apis(); ///> get list of audio api names as Tcl string {{api name} {api name 2} ...}
 
 // ------
 // debug
 
 void* cmp_pdthis();
+
+//
+
+void cmp_bind_object(t_object* obj, t_symbol* s); ///> bind object to symbol
+void cmp_bind_canvas(t_canvas* obj, t_symbol* s); ///> bind canvas to symbol
+void cmp_unbind(t_pd* obj, t_symbol* s); ///> remove binding
 
 #endif // CM_PDLINK_H

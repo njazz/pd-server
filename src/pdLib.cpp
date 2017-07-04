@@ -202,6 +202,25 @@ void cmp_setprinthook(t_printhook h)
     sys_printhook = h;
 }
 
+void cmp_bind_object(t_object* obj, t_symbol* s)
+{
+    //todo check object here
+
+    pd_bind((t_pd*)obj, s);
+}
+
+void cmp_bind_canvas(t_canvas* obj, t_symbol* s)
+{
+    //todo check object here
+
+    pd_bind((t_pd*)obj, s);
+}
+
+void cmp_unbind(t_pd* obj, t_symbol* s)
+{
+    pd_unbind(obj,s);
+}
+
 void cmp_add_searchpath(t_symbol* s)
 {
     sys_searchpath = namelist_append_files(sys_searchpath, s->s_name);
@@ -770,7 +789,7 @@ EXTERN t_cmp_audio_info* cmp_get_audio_device_info()
         outdevlist, &ret->outputDeviceCount, &ret->hasMulti, &ret->hasCallback,
         maxndev, devdescsize);
 
-    cout << indevlist << "||" << outdevlist << "\n";
+    //cout << indevlist << "||" << outdevlist << "\n";
 
     //ret->inputDeviceList = std::string(indevlist,1024);
     //ret->outputDeviceList = std::string(outdevlist,1024);
@@ -780,12 +799,45 @@ EXTERN t_cmp_audio_info* cmp_get_audio_device_info()
 
 EXTERN std::string cmp_get_audio_apis()
 {
-    char* buf = new char[1024];
-    sys_get_audio_apis(buf);
+    //    char* buf = new char[1024];
+    //    sys_get_audio_apis(buf);
 
-    std::string c = buf;
+    std::string c; // = buf;
 
-    return c;
+#ifdef USEAPI_OSS
+    c += "OSS,"; //sprintf(buf + strlen(buf), "{OSS %d} ", API_OSS); n++;
+#endif
+#ifdef USEAPI_MMIO
+    c += "standard (MMIO),"; //sprintf(buf + strlen(buf), "{\"standard (MMIO)\" %d} ", API_MMIO); n++;
+#endif
+#ifdef USEAPI_ALSA
+    c += "ALSA,"; // sprintf(buf + strlen(buf), "{ALSA %d} ", API_ALSA); n++;
+#endif
+#ifdef USEAPI_PORTAUDIO
+#ifdef _WIN32
+    c += "ASIO (via portaudio),"; //sprintf(buf + strlen(buf),
+        "{\"ASIO (via portaudio)\" %d} ", API_PORTAUDIO);
+#else
+#ifdef __APPLE__
+    c += "standard (portaudio) "; //sprintf(buf + strlen(buf),"{\"standard (portaudio)\" %d} ", API_PORTAUDIO);
+#else
+    c += "portaudio,"; //sprintf(buf + strlen(buf), "{portaudio %d} ", API_PORTAUDIO);
+#endif
+#endif
+#endif
+
+#ifdef USEAPI_JACK
+        c += "jack,"; //sprintf(buf + strlen(buf), "{jack %d} ", API_JACK); n++;
+#endif
+#ifdef USEAPI_AUDIOUNIT
+        c += "AudioUnit,"; //sprintf(buf + strlen(buf), "{AudioUnit %d} ", API_AUDIOUNIT); n++;
+#endif
+
+#ifdef USEAPI_DUMMY
+        c += "dummy,"; //sprintf(buf + strlen(buf), "{dummy %d} ", API_DUMMY); n++;
+#endif
+
+        return c;
 }
 
 EXTERN void* cmp_pdthis()

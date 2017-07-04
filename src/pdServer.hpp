@@ -163,7 +163,17 @@ public:
 };
 
 class ServerPatchcord {
+    t_object* _srcObject;
+    t_object* _destObject;
+    int _srcOutlet;
+    int _destInlet;
 public:
+    explicit ServerPatchcord(t_object* obj1, int idx1, t_object* obj2, int idx2 );
+
+    t_object* srcObject();
+    t_object* destObject();
+    int srcOutlet();
+    int destInlet();
 };
 
 // ----------------------------------------
@@ -201,7 +211,7 @@ public:
     void deleteArray(ServerArray* a);
 
     ServerPatchcord* createPatchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx); //?
-    void disconnect(ServerPatchcord* p); //??
+    void deletePatchcord(ServerPatchcord* p);
 
     vector<ServerObject*> getObjectList();
     vector<ServerPatchcord*> getConnectionList();

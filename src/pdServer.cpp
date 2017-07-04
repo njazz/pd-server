@@ -85,15 +85,15 @@ ServerObject::ServerObject(ServerCanvas* parent, string text)
 
         _pdObject = obj;
 
-        std::cout << "|||||||||| new object on canvas: " << canvas << " || pd object ptr " << _pdObject << std::endl;
+        //std::cout << "|||||||||| new object on canvas: " << canvas << " || pd object ptr " << _pdObject << std::endl;
 
         if (obj) {
-            std::cout << "class name after object is created: " << obj->te_g.g_pd->c_name->s_name << "\n";
+            //std::cout << "class name after object is created: " << obj->te_g.g_pd->c_name->s_name << "\n";
 
             t_class* cl = (t_class*)(obj);
 
             //t_class
-            std::cout << "class name after object is created (pointer): " << cl->c_name->s_name << "\n";
+            //std::cout << "class name after object is created (pointer): " << cl->c_name->s_name << "\n";
         }
     } else {
         cmp_error("ServerCanvas error!");
@@ -299,6 +299,21 @@ ServerArrayData* ServerArray::getData() //float* dest, size_t n)
 void ServerArray::registerObserver(Observer* o){};
 
 // ----------------------------------------
+
+ServerPatchcord::ServerPatchcord(t_object* obj1, int idx1, t_object* obj2, int idx2)
+{
+    _srcObject = obj1;
+    _srcOutlet = idx1;
+    _destObject = obj2;
+    _destInlet = idx2;
+}
+
+t_object* ServerPatchcord::srcObject() { return _srcObject; }
+t_object* ServerPatchcord::destObject() { return _destObject; }
+int ServerPatchcord::srcOutlet() { return _srcOutlet; }
+int ServerPatchcord::destInlet() { return _destInlet; }
+
+// ----------------------------------------
 ServerCanvas::ServerCanvas()
 {
     _canvas = cmp_new_patch();
@@ -331,11 +346,10 @@ ServerCanvas::ServerCanvas(t_canvas* canvas)
 ServerObject* ServerCanvas::createObject(string name)
 {
 
-
     ServerObject* ret = new ServerObject(this, name);
     _objects.push_back(ret);
 
-     // this should be done other way
+    // this should be done other way
 
     if (name.substr(0, 5) == "inlet") {
         if (_observer)
@@ -387,10 +401,22 @@ void ServerCanvas::deleteArray(ServerArray* a){};
 
 ServerPatchcord* ServerCanvas::createPatchcord(ServerObject* src, int srcIdx, ServerObject* dest, int destIdx)
 {
+    ServerPatchcord* ret = new ServerPatchcord((t_object*)src->_pdObject, srcIdx, (t_object*)dest->_pdObject, destIdx);
+
+    // TODO move
     cmp_patchcord((t_object*)src->_pdObject, srcIdx, (t_object*)dest->_pdObject, destIdx);
+
+    return ret;
 };
 
-void ServerCanvas::disconnect(ServerPatchcord* p){}; //??
+void ServerCanvas::deletePatchcord(ServerPatchcord* p)
+{
+
+    // TODO move?
+    cmp_delete_patchcord(p->srcObject(), p->srcOutlet(), p->destObject(), p->destInlet());
+
+    delete p;
+};
 
 vector<ServerObject*> ServerCanvas::getObjectList()
 {
@@ -602,11 +628,6 @@ AtomList Observer::data()
 void qtpdUpdate(long objectId, AtomList list)
 {
 
-    //map<long, Observer*>::iterator it;
-
-    //for (it=objectObservers.begin(); it!=objectObservers.end(); ++it)
-    //{
-
     if (objectObservers[objectId]) {
         Observer* o = objectObservers[objectId];
         if (o) {
@@ -615,11 +636,9 @@ void qtpdUpdate(long objectId, AtomList list)
         } else {
             cmp_error("observer not found");
         }
-        //cmp_post("updated obj");
+
     } else {
         std::cout << "object not found: " << objectId << "\n";
         std::cout << "observers count: " << objectObservers.size() << "\n";
     }
-
-    //}
 }

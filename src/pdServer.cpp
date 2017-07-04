@@ -211,12 +211,10 @@ XLetType ServerObject::getOutletType(int index)
 
 void ServerObject::setReceiveSymbol(string symbolName)
 {
-     _receiveSymbol = gensym(symbolName.c_str());
+    _receiveSymbol = gensym(symbolName.c_str());
 
     if (_pdObject)
         cmp_bind_object(_pdObject, _receiveSymbol);
-
-
 }
 
 ServerObject::~ServerObject()
@@ -224,8 +222,9 @@ ServerObject::~ServerObject()
     if (_receiveSymbol)
         cmp_unbind((t_pd*)_pdObject, _receiveSymbol);
 
-    cmp_deleteobject(_parent->canvasObject(),_pdObject);
+    cmp_deleteobject(_parent->canvasObject(), _pdObject);
 }
+
 // ----------------------------------------
 ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
 {

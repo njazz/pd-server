@@ -15,7 +15,7 @@ DEFINES += PDSERVER_LIBRARY \
     HAVE_UNISTD_H \
     USEAPI_PORTAUDIO \
 #    USEAPI_DUMMY \
-    THREAD_LOCKING \
+#    THREAD_LOCKING \
     HAVE_LIBDL
 
 # The following define makes your compiler emit warnings if you use

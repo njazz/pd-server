@@ -23,8 +23,20 @@ private:
 public:
     Observer();
     virtual void update();
+
     void setData(AtomList data);
     AtomList data();
+};
+
+class CanvasObserver : public Observer {
+public:
+    CanvasObserver();
+
+    virtual void inletAdded();
+    virtual void inletRemoved();
+
+    virtual void outletAdded();
+    virtual void outletRemoved();
 };
 
 class PropertyObserver {
@@ -87,10 +99,9 @@ private:
 
     bool _errorBox;
 
-    t_symbol*  _receiveSymbol;
+    t_symbol* _receiveSymbol;
 
 public:
-
     ServerObject();
     ServerObject(t_object* pdObject);
 
@@ -101,9 +112,7 @@ public:
 
     bool errorBox() { return _errorBox; }
 
-    bool hasInternalObject(){return  _pdObject!=0;}
-
-
+    bool hasInternalObject() { return _pdObject != 0; }
 
     explicit ServerObject(ServerCanvas* parent, string text);
 
@@ -130,8 +139,7 @@ public:
     void setReceiveSymbol(string symbolName);
 };
 
-typedef struct _serverArrayData
-{
+typedef struct _serverArrayData {
     int size;
     float* sample;
 } ServerArrayData;
@@ -150,7 +158,7 @@ public:
     int size();
     void setSize(int size);
 
-    ServerArrayData* getData();//float* dest, size_t n);
+    ServerArrayData* getData(); //float* dest, size_t n);
     virtual void registerObserver(Observer* o);
 };
 
@@ -172,6 +180,8 @@ private:
     string _path;
 
     ServerInstance* _parentInstance;
+
+    CanvasObserver* _observer;
 
 public:
     ServerCanvas();
@@ -195,8 +205,14 @@ public:
 
     vector<ServerObject*> getObjectList();
     vector<ServerPatchcord*> getConnectionList();
-    virtual void registerObserver(Observer*);
+
+    virtual void registerObserver(CanvasObserver* o);
     virtual void deleteObserver();
+
+    virtual int inletCount();
+    virtual int outletCount();
+
+
     string path();
 
     void loadbang();

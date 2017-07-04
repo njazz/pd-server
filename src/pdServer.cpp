@@ -2,11 +2,14 @@
 
 #include "pdLib.hpp"
 
+#include <algorithm>
 #include <cassert>
 
 // TEMPORARY
 extern "C" {
 #include "m_imp.h"
+
+#include "m_pd.h"
 }
 
 //TEMPORARY
@@ -26,6 +29,14 @@ void PropertyObserver::update(){};
 void ServerProperties::addObserver(PropertyObserver* p){};
 void ServerProperties::removeObserver(PropertyObserver* p){};
 
+// ---------------------------------------
+
+CanvasObserver::CanvasObserver(){};
+
+void CanvasObserver::inletAdded() { ServerInstance::post("wrong virtual call"); };
+void CanvasObserver::inletRemoved(){};
+void CanvasObserver::outletAdded(){};
+void CanvasObserver::outletRemoved(){};
 // ---------------------------------------
 
 ServerObject::ServerObject()
@@ -98,6 +109,7 @@ ServerObject::ServerObject(ServerCanvas* parent, string text)
 }
 
 //void ServerObject::setParent(ServerObject* parent) { _parent = parent; };
+
 ServerCanvas* ServerObject::parent() { return _parent; };
 
 // TEMPORARY
@@ -140,7 +152,7 @@ int ServerObject::outletCount()
 void ServerObject::registerObserver(Observer* o)
 {
     if (_pdObject) {
-        std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
+        //std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
         objectObservers[(long)_pdObject] = o;
     }
 };
@@ -297,6 +309,8 @@ ServerCanvas::ServerCanvas()
     } else {
         _path = cmp_get_path(_canvas)->s_name;
     }
+
+    _observer = 0;
 }
 
 ServerCanvas::ServerCanvas(t_canvas* canvas)
@@ -310,17 +324,50 @@ ServerCanvas::ServerCanvas(t_canvas* canvas)
     } else {
         _path = cmp_get_path(_canvas)->s_name;
     }
+
+    _observer = 0;
 }
 
 ServerObject* ServerCanvas::createObject(string name)
 {
+
+
     ServerObject* ret = new ServerObject(this, name);
     _objects.push_back(ret);
+
+     // this should be done other way
+
+    if (name.substr(0, 5) == "inlet") {
+        if (_observer)
+            _observer->inletAdded();
+        else
+            ServerInstance::post("no observer");
+    }
+
+    if (name.substr(0, 6) == "outlet") {
+        if (_observer)
+            _observer->outletAdded();
+    }
+
     return ret;
 };
 
 void ServerCanvas::deleteObject(ServerObject* o){
     // TODO
+
+    //    int inCount = toServerObject()->inletCount();
+    //    int outCount = toServerObject()->outletCount();
+
+    //    _objects.erase(std::remove(_objects.begin(), _objects.end(), o), _objects.end());
+
+    //    if (inCount != toServerObject()->inletCount()) {
+    //        _observer->inletRemoved();
+    //    }
+
+    //    if (outCount != toServerObject()->outletCount()) {
+    //        _observer->outletRemoved();
+    //    }
+
 };
 
 t_canvas* ServerCanvas::canvasObject()
@@ -354,7 +401,11 @@ vector<ServerPatchcord*> ServerCanvas::getConnectionList()
     return _patchcords;
 };
 
-void ServerCanvas::registerObserver(Observer*){};
+void ServerCanvas::registerObserver(CanvasObserver* o)
+{
+    _observer = o;
+};
+
 void ServerCanvas::deleteObserver(){};
 
 string ServerCanvas::path()
@@ -384,9 +435,25 @@ ServerObject* ServerCanvas::toServerObject()
 {
     ServerObject* ret = 0;
 
-    ret = new ServerObject((t_object*)(_pdObject));
+    ret = new ServerObject((t_object*)(_canvas));
 
     return ret;
+}
+
+int ServerCanvas::inletCount()
+{
+    if (_canvas)
+        return cmp_get_inlet_count(reinterpret_cast<t_object*>(_canvas));
+    else
+        return -1;
+}
+
+int ServerCanvas::outletCount()
+{
+    if (_canvas)
+        return cmp_get_outlet_count(reinterpret_cast<t_object*>(_canvas));
+    else
+        return -1;
 }
 
 // -----------------------------------------------

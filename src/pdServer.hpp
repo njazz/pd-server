@@ -5,8 +5,10 @@
 #include <string>
 #include <vector>
 
+#include <pd-server_global.h>
+
 namespace ceammc {
-class AtomList;
+class PDSERVER_EXPORT AtomList;
 }
 
 using namespace std;
@@ -16,7 +18,7 @@ using namespace ceammc;
 
 typedef vector<string> ServerPath;
 
-class Observer {
+class PDSERVER_EXPORT Observer  {
 private:
     AtomList* _data;
 
@@ -28,7 +30,7 @@ public:
     AtomList data();
 };
 
-class CanvasObserver : public Observer {
+class PDSERVER_EXPORT CanvasObserver : public Observer {
 public:
     CanvasObserver();
 
@@ -39,12 +41,12 @@ public:
     virtual void outletRemoved();
 };
 
-class PropertyObserver {
+class PDSERVER_EXPORT PropertyObserver {
 public:
     virtual void update();
 };
 
-class ConsoleObserver : public Observer {
+class PDSERVER_EXPORT ConsoleObserver : public Observer {
 private:
     string _text;
 
@@ -56,23 +58,23 @@ public:
 typedef enum { XLetMessage,
     XLetSignal } XLetType;
 
-class ServerXLet {
+class PDSERVER_EXPORT ServerXLet {
 public:
     XLetType type;
     int index;
 };
 
-class ServerOutlet : ServerXLet {
+class PDSERVER_EXPORT ServerOutlet : ServerXLet {
 public:
 };
 
-class ServerInlet : ServerXLet {
+class PDSERVER_EXPORT ServerInlet : ServerXLet {
 public:
 };
 
 // -------------------------------
 
-class ServerProperties {
+class PDSERVER_EXPORT ServerProperties {
     vector<PropertyObserver*> _observers;
 
 public:
@@ -85,13 +87,13 @@ enum ServerObjectType { typeObject,
     typeArray,
     typeAbstraction };
 
-//class t_pd;
+//class PDSERVER_EXPORT t_pd;
 
-class ServerCanvas;
+class PDSERVER_EXPORT ServerCanvas;
 typedef struct _text t_object;
 typedef struct _symbol t_symbol;
 
-class ServerObject {
+class PDSERVER_EXPORT ServerObject {
 private:
     ServerCanvas* _parent;
     ServerObjectType _type;
@@ -144,7 +146,7 @@ typedef struct _serverArrayData {
     float* sample;
 } ServerArrayData;
 
-class ServerArray : ServerObject {
+class PDSERVER_EXPORT ServerArray : ServerObject {
     int _size;
     string _name;
 
@@ -162,7 +164,7 @@ public:
     virtual void registerObserver(Observer* o);
 };
 
-class ServerPatchcord {
+class PDSERVER_EXPORT ServerPatchcord {
     t_object* _srcObject;
     t_object* _destObject;
     int _srcOutlet;
@@ -178,10 +180,10 @@ public:
 
 // ----------------------------------------
 
-class ServerInstance;
+class PDSERVER_EXPORT ServerInstance;
 //typedef struct _glist t_canvas;
 
-class ServerCanvas : public ServerObject {
+class PDSERVER_EXPORT ServerCanvas : public ServerObject {
 private:
     struct _glist* _canvas;
 
@@ -230,17 +232,17 @@ public:
     ServerObject* toServerObject();
 };
 
-class ServerAudioDevice {
+class PDSERVER_EXPORT ServerAudioDevice {
 public:
 };
 
-class ServerMIDIDevice {
+class PDSERVER_EXPORT ServerMIDIDevice {
 public:
 };
 
 // ----------------------------------------
 
-class ServerInstance // : Object ??
+class PDSERVER_EXPORT ServerInstance // : Object ??
 {
 private:
     vector<ServerCanvas*> _canvases;
@@ -288,7 +290,7 @@ public:
 
 // ----------------------------------------
 
-class TheServer {
+class PDSERVER_EXPORT TheServer {
 private:
     vector<ServerInstance*> _instances;
 
@@ -301,7 +303,7 @@ public:
     ServerInstance* createInstance();
 };
 
-class LocalServer : public TheServer {
+class PDSERVER_EXPORT LocalServer : public TheServer {
 };
 
 // --------------------------------------

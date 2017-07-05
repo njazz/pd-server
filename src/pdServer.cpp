@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cassert>
 
+#include "pd-server_global.h"
 // TEMPORARY
 extern "C" {
 #include "m_imp.h"
@@ -625,7 +626,7 @@ AtomList Observer::data()
 
 // ---------------------------------------
 
-void qtpdUpdate(long objectId, AtomList list)
+PDSERVER_EXPORT void qtpdUpdate(long objectId, AtomList list)
 {
 
     if (objectObservers[objectId]) {

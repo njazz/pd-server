@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT       -= core
 
 TARGET = pd-server
 TEMPLATE = lib
@@ -131,7 +131,7 @@ SOURCES += \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp
 
 HEADERS +=\
-        pd-server_global.h \
+        ../pd-server_global.h \
     ../pdLib.hpp \
     ../pdServer.hpp \
     ../../pure-data-src/src/catch.hh \

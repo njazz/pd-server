@@ -22,7 +22,8 @@ macx: DEFINES += APPLE \
 
 unix: DEFINES += HAVE_LIBDL
 
-win32: DEFINES += PD_INTERNAL\
+win32: DEFINES += \
+#    PD_INTERNAL\
      USEAPI_DUMMY
 
 

@@ -130,7 +130,12 @@ void cmp_pdinit()
 
     pd_init();
 
+#ifdef USEAPI_PORTAUDIO
     sys_set_audio_api(API_PORTAUDIO); // API_PORTAUDIO
+#endif
+#ifdef USEAPI_DUMMY
+    sys_set_audio_api(API_DUMMY); // API_PORTAUDIO
+#endif
     sys_searchpath = NULL;
     sys_startgui(NULL);
 
@@ -816,7 +821,7 @@ EXTERN std::string cmp_get_audio_apis()
 #ifdef USEAPI_PORTAUDIO
 #ifdef _WIN32
     c += "ASIO (via portaudio),"; //sprintf(buf + strlen(buf),
-        "{\"ASIO (via portaudio)\" %d} ", API_PORTAUDIO);
+        //"{\"ASIO (via portaudio)\" %d} ", API_PORTAUDIO);
 #else
 #ifdef __APPLE__
     c += "standard (portaudio) "; //sprintf(buf + strlen(buf),"{\"standard (portaudio)\" %d} ", API_PORTAUDIO);

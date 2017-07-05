@@ -10,24 +10,24 @@ TARGET = pd-server
 TEMPLATE = lib
 
 DEFINES += PDSERVER_LIBRARY \
-    APPLE \
     PD \
     HAVE_UNISTD_H \
-    USEAPI_PORTAUDIO \
+#    USEAPI_PORTAUDIO \
 #    USEAPI_DUMMY \
 #    THREAD_LOCKING \
-    HAVE_LIBDL
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked as deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
+
+macx: DEFINES += APPLE \
+     USEAPI_PORTAUDIO
+
+unix: DEFINES += HAVE_LIBDL
+
+win32: DEFINES += PD_INTERNAL\
+     USEAPI_DUMMY
+
+
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
     ../pdLib.cpp \
@@ -90,8 +90,6 @@ SOURCES += \
 #    ../../pure-data-src/src/s_audio_jack.c \
 #    ../../pure-data-src/src/s_audio_mmio.c \
 #    ../../pure-data-src/src/s_audio_oss.c \
-    ../../pure-data-src/src/s_audio_pa.c \
-    ../../pure-data-src/src/s_audio_paring.c \
     ../../pure-data-src/src/s_audio.c \
     ../../pure-data-src/src/s_entry.c \
     ../../pure-data-src/src/s_file.c \
@@ -99,9 +97,9 @@ SOURCES += \
     ../../pure-data-src/src/s_loader.c \
     ../../pure-data-src/src/s_main.c \
 #    ../../pure-data-src/src/s_midi_alsa.c \
-#    ../../pure-data-src/src/s_midi_dummy.c \
+    ../../pure-data-src/src/s_midi_dummy.c \
 #    ../../pure-data-src/src/s_midi_oss.c \
-    ../../pure-data-src/src/s_midi_pm.c \
+#    ../../pure-data-src/src/s_midi_pm.c \
     ../../pure-data-src/src/s_midi.c \
     ../../pure-data-src/src/s_path.c \
     ../../pure-data-src/src/s_print.c \
@@ -156,6 +154,14 @@ HEADERS +=\
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_format.h \
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.h \
     ../pdUpdate.hpp
+    #../../../../../../../Program Files/boost/boost_1_55_0/boost/shared_ptr.hpp
+
+#win32: HEADERS +=    ../../../../../../../Program Files/boost/boost_1_55_0/boost/shared_ptr.hpp
+
+#win32: HEADERS += C:/Boost/include/boost-1_55/boost/shared_ptr.hpp
+
+macx: HEADERS +=     ../../pure-data-src/src/s_audio_pa.c \
+    ../../pure-data-src/src/s_audio_paring.c \
 
 unix {
     target.path = /usr/local/lib
@@ -170,4 +176,9 @@ INCLUDEPATH += ../../pure-data-src/ceammc/ext/src/lib/ \
             ../../pure-data-src/portmidi/porttime \
             ../../pure-data-src/portaudio/include
 
-LIBS += -L/usr/local/lib/ -lportaudio -lportmidi
+win32:INCLUDEPATH += C:/Boost/include/boost-1_55
+
+
+macx:LIBS += -L/usr/local/lib/ -lportaudio -lportmidi
+
+win32:LIBS += -lws2_32

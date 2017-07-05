@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <pd-server_global.h>
+#include "pd-server_global.h"
 
 namespace ceammc {
 class PDSERVER_EXPORT AtomList;

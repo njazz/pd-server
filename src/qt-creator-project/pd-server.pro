@@ -97,9 +97,8 @@ SOURCES += \
     ../../pure-data-src/src/s_loader.c \
     ../../pure-data-src/src/s_main.c \
 #    ../../pure-data-src/src/s_midi_alsa.c \
-    ../../pure-data-src/src/s_midi_dummy.c \
 #    ../../pure-data-src/src/s_midi_oss.c \
-#    ../../pure-data-src/src/s_midi_pm.c \
+#
     ../../pure-data-src/src/s_midi.c \
     ../../pure-data-src/src/s_path.c \
     ../../pure-data-src/src/s_print.c \
@@ -160,8 +159,14 @@ HEADERS +=\
 
 #win32: HEADERS += C:/Boost/include/boost-1_55/boost/shared_ptr.hpp
 
-macx: HEADERS +=     ../../pure-data-src/src/s_audio_pa.c \
-    ../../pure-data-src/src/s_audio_paring.c \
+macx: {SOURCES +=     ../../pure-data-src/src/s_audio_pa.c \
+        ../../pure-data-src/src/s_audio_paring.c \
+        ../../pure-data-src/src/s_midi_pm.c \
+}
+
+win32: {
+    SOURCES +=     ../../pure-data-src/src/s_midi_dummy.c \
+}
 
 unix {
     target.path = /usr/local/lib

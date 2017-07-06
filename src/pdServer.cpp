@@ -18,7 +18,7 @@ extern "C" {
 
 using namespace std;
 
-static map<long, Observer*> objectObservers;
+static vector<pair<long, Observer*> > objectObservers;
 // ------------------------------
 
 void Observer::update(){};
@@ -154,13 +154,23 @@ void ServerObject::registerObserver(Observer* o)
 {
     if (_pdObject) {
         //std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
-        objectObservers[(long)_pdObject] = o;
+        objectObservers.push_back(pair<long, Observer*>((long)_pdObject, o));
+        //objectObservers[(long)_pdObject] = o;
     }
 };
 
 void ServerObject::deleteObserver()
 {
-    objectObservers.erase((long)_pdObject);
+    vector<pair<long, Observer*> >::iterator it;
+    for (it = objectObservers.begin(); it != objectObservers.end();) {
+        pair<long, Observer*> obj = *it;
+
+        if (obj.first == (long)_pdObject) {
+            objectObservers.erase(it);
+        } else {
+            ++it;
+        }
+    }
 };
 
 ServerObjectType ServerObject::type() { return _type; };
@@ -629,17 +639,23 @@ AtomList Observer::data()
 PDSERVER_EXPORT void qtpdUpdate(long objectId, AtomList list)
 {
 
-    if (objectObservers[objectId]) {
-        Observer* o = objectObservers[objectId];
-        if (o) {
-            o->setData(list);
-            o->update();
-        } else {
-            cmp_error("observer not found");
-        }
+    vector<pair<long, Observer*> >::iterator it;
 
-    } else {
+    for (it = objectObservers.begin(); it != objectObservers.end(); ++it) {
+        pair<long, Observer*> obj = *it;
+
+        if (obj.first == objectId) {
+            Observer* o = obj.second;
+            if (o) {
+                o->setData(list);
+                o->update();
+            } else {
+                cmp_error("observer not found");
+            }
+        }
+        /*else {
         std::cout << "object not found: " << objectId << "\n";
         std::cout << "observers count: " << objectObservers.size() << "\n";
+    }*/
     }
 }

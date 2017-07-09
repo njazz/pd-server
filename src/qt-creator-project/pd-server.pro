@@ -153,7 +153,8 @@ HEADERS +=\
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_format.h \
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.h \
-    ../pdUpdate.hpp
+    ../pdUpdate.hpp \
+    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h
     #../../../../../../../Program Files/boost/boost_1_55_0/boost/shared_ptr.hpp
 
 #win32: HEADERS +=    ../../../../../../../Program Files/boost/boost_1_55_0/boost/shared_ptr.hpp
@@ -183,6 +184,8 @@ INCLUDEPATH += ../../pure-data-src/ceammc/ext/src/lib/ \
             ../../pure-data-src/portaudio/include
 
 win32:INCLUDEPATH += C:/Boost/include/boost-1_55
+
+macx: INCLUDEPATH += /usr/local/Cellar/boost/1.63.0/include/
 
 
 macx:LIBS += -L/usr/local/lib/ -lportaudio -lportmidi

@@ -628,9 +628,11 @@ Observer::Observer()
 }
 
 void Observer::setData(AtomList data) { *_data = data; };
-AtomList Observer::data()
+
+AtomList* Observer::data()
 {
-    AtomList ret = *_data;
+    AtomList* ret = new AtomList;
+    *ret = *_data;
     return ret;
 };
 

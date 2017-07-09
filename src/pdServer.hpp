@@ -27,7 +27,7 @@ public:
     virtual void update();
 
     void setData(AtomList data);
-    AtomList data();
+    AtomList *data();
 };
 
 class PDSERVER_EXPORT CanvasObserver : public Observer {

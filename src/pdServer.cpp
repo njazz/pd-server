@@ -85,15 +85,15 @@ ServerObject::ServerObject(ServerCanvas* parent, string text)
 
         _pdObject = obj;
 
-        //std::cout << "|||||||||| new object on canvas: " << canvas << " || pd object ptr " << _pdObject << std::endl;
+        //cout << "|||||||||| new object on canvas: " << canvas << " || pd object ptr " << _pdObject << endl;
 
         if (obj) {
-            //std::cout << "class name after object is created: " << obj->te_g.g_pd->c_name->s_name << "\n";
+            //cout << "class name after object is created: " << obj->te_g.g_pd->c_name->s_name << "\n";
 
             t_class* cl = (t_class*)(obj);
 
             //t_class
-            //std::cout << "class name after object is created (pointer): " << cl->c_name->s_name << "\n";
+            //cout << "class name after object is created (pointer): " << cl->c_name->s_name << "\n";
         }
     } else {
         cmp_error("ServerCanvas error!");
@@ -119,18 +119,18 @@ void ServerObject::message(string str)
     string* msg = new string;
     *msg = str;
 
-    cout << "msg " << msg << endl;
+    //cout << "msg " << msg << endl;
 
     t_class* cl = (t_class*)_pdObject;
 
-    std::cout << "class name from serverObject: " << cl->c_name->s_name << "\n";
+    //cout << "class name from serverObject: " << cl->c_name->s_name << "\n";
 
     if (_pdObject) {
-        cout << "send-> " << this << " pd object:" << _pdObject << endl;
+        //cout << "send-> " << this << " pd object:" << _pdObject << endl;
         cmp_sendstring(static_cast<t_object*>(_pdObject), *msg);
     } else {
         cmp_error("internal pdObject error");
-        cout << "pdobject error" << endl;
+        //cout << "pdobject error" << endl;
     }
 };
 
@@ -152,7 +152,7 @@ int ServerObject::outletCount()
 void ServerObject::registerObserver(Observer* o)
 {
     if (_pdObject) {
-        //std::cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
+        //cout << " ^^^ registered observer: " << (long)o << " for " << (long)_pdObject << "\n";
         objectObservers.push_back(pair<long, Observer*>((long)_pdObject, o));
         //objectObservers[(long)_pdObject] = o;
     }
@@ -260,7 +260,7 @@ ServerArray::ServerArray(ServerCanvas* parent, string name, int size)
         //return false;
     }
 
-    //std::cout << "Array: Pd canvas: " << parent->canvasObject() << "\n";
+    //cout << "Array: Pd canvas: " << parent->canvasObject() << "\n";
 
     _pdArray = cmp_new_array(_parent->canvasObject(), gensym(_name.c_str()), float(_size), 1, 1);
 
@@ -341,7 +341,7 @@ ServerCanvas::ServerCanvas()
 ServerCanvas::ServerCanvas(t_canvas* canvas)
 {
     _canvas = canvas;
-    //std::cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << std::endl;
+    //cout << "|||||||||| server canvas: " << this << " || pd canvas ptr " << _canvas << endl;
     setType(typeCanvas);
 
     if (!_canvas) {
@@ -382,7 +382,7 @@ void ServerCanvas::deleteObject(ServerObject* o){
     //    int inCount = toServerObject()->inletCount();
     //    int outCount = toServerObject()->outletCount();
 
-    //    _objects.erase(std::remove(_objects.begin(), _objects.end(), o), _objects.end());
+    //    _objects.erase(remove(_objects.begin(), _objects.end(), o), _objects.end());
 
     //    if (inCount != toServerObject()->inletCount()) {
     //        _observer->inletRemoved();
@@ -562,11 +562,13 @@ void ServerInstance::setConsoleObserver(ConsoleObserver* o)
 
 ServerPath* ServerInstance::path() { return _path; };
 
-string ServerInstance::listLoadedLibraries(){
+string ServerInstance::listLoadedLibraries()
+{
     return cmp_list_loaded_libraries();
 };
 
-vector<string> ServerInstance::listLoadedClasses(){
+vector<string> ServerInstance::listLoadedClasses()
+{
     return cmp_list_loaded_classes();
 };
 
@@ -601,14 +603,12 @@ void ServerInstance::sendMessage(string object, string text)
 {
     t_symbol* obj_sym = gensym(object.c_str());
 
-    if (!obj_sym->s_thing)
-    {
+    if (!obj_sym->s_thing) {
         ServerInstance::error("bad destination!");
         return;
     }
 
     cmp_sendstring((t_object*)obj_sym->s_thing, text);
-
 }
 
 string ServerInstance::getBindObjectsList()
@@ -680,8 +680,8 @@ PDSERVER_EXPORT void qtpdUpdate(long objectId, AtomList list)
             }
         }
         /*else {
-        std::cout << "object not found: " << objectId << "\n";
-        std::cout << "observers count: " << objectObservers.size() << "\n";
+        cout << "object not found: " << objectId << "\n";
+        cout << "observers count: " << objectObservers.size() << "\n";
     }*/
     }
 }

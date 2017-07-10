@@ -280,6 +280,8 @@ public:
     static void error(string text);
     static void verbose(int level, string text);
 
+    static void sendMessage(string object, string text);
+
     static void setVerboseLevel(int level);
 
     ServerAudioDevice* audioDevice();

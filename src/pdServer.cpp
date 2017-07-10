@@ -524,7 +524,7 @@ vector<ConsoleObserver*> printHook::_consoleObservers;
 
 ServerInstance::ServerInstance()
 {
-    cout << "######### new server instance" << endl;
+    //cout << "######### new server instance" << endl;
 
     cmp_pdinit();
     cmp_setprinthook(&printHook::hookFunction);
@@ -591,6 +591,20 @@ void ServerInstance::setVerboseLevel(int level)
 {
     cmp_set_verbose(level);
 };
+
+void ServerInstance::sendMessage(string object, string text)
+{
+    t_symbol* obj_sym = gensym(object.c_str());
+
+    if (!obj_sym->s_thing)
+    {
+        ServerInstance::error("bad destination!");
+        return;
+    }
+
+    cmp_sendstring((t_object*)obj_sym->s_thing, text);
+
+}
 
 ServerAudioDevice* ServerInstance::audioDevice() { return _audioDevice; };
 ServerMIDIDevice* ServerInstance::midiDevice() { return _midiDevice; };

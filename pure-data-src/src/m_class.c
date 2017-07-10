@@ -489,12 +489,12 @@ t_propertiesfn class_getpropertiesfn(t_class *c)
 static t_symbol *symhash[HASHSIZE];
 
 // ceammc
-size_t pd_ceammc_gensym_hash_table_size()
+EXTERN size_t pd_ceammc_gensym_hash_table_size()
 {
     return HASHSIZE;
 }
 
-t_symbol** pd_ceammc_gensym_hash_table()
+EXTERN t_symbol** pd_ceammc_gensym_hash_table()
 {
     return symhash;
 }

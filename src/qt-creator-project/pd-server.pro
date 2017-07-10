@@ -16,7 +16,6 @@ DEFINES += PDSERVER_LIBRARY \
 #    USEAPI_DUMMY \
 #    THREAD_LOCKING \
 
-
 macx: DEFINES += APPLE \
      USEAPI_PORTAUDIO
 
@@ -186,7 +185,6 @@ INCLUDEPATH += ../../pure-data-src/ceammc/ext/src/lib/ \
 win32:INCLUDEPATH += C:/Boost/include/boost-1_55
 
 macx: INCLUDEPATH += /usr/local/Cellar/boost/1.63.0/include/
-
 
 macx:LIBS += -L/usr/local/lib/ -lportaudio -lportmidi
 

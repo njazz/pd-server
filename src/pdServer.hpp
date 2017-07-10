@@ -282,6 +282,8 @@ public:
 
     static void sendMessage(string object, string text);
 
+    static string getBindObjectsList();
+
     static void setVerboseLevel(int level);
 
     ServerAudioDevice* audioDevice();

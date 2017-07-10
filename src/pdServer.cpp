@@ -7,11 +7,10 @@
 
 #include "pd-server_global.h"
 // TEMPORARY
-extern "C" {
-#include "m_imp.h"
-
-#include "m_pd.h"
-}
+//extern "C" {
+//#include <m_imp.h>
+//#include <m_pd.h>
+//}
 
 //TEMPORARY
 #include "math.h"
@@ -604,6 +603,11 @@ void ServerInstance::sendMessage(string object, string text)
 
     cmp_sendstring((t_object*)obj_sym->s_thing, text);
 
+}
+
+string ServerInstance::getBindObjectsList()
+{
+    return cmp_list_bind_objects();
 }
 
 ServerAudioDevice* ServerInstance::audioDevice() { return _audioDevice; };

@@ -806,6 +806,11 @@ EXTERN int pd_getdspstate(void);
 
     //TEST
     EXTERN void canvas_saveto(t_canvas *x, t_binbuf *b);
+
+    //ceammc
+    EXTERN size_t pd_ceammc_gensym_hash_table_size();
+    EXTERN t_symbol** pd_ceammc_gensym_hash_table();
+
 #if defined(_LANGUAGE_C_PLUS_PLUS) || defined(__cplusplus)
 }
 #endif

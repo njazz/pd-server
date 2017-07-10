@@ -342,4 +342,7 @@ void cmp_bind_object(t_object* obj, t_symbol* s); ///> bind object to symbol
 void cmp_bind_canvas(t_canvas* obj, t_symbol* s); ///> bind canvas to symbol
 void cmp_unbind(t_pd* obj, t_symbol* s); ///> remove binding
 
+std::string cmp_list_bind_objects();
+
+
 #endif // CM_PDLINK_H

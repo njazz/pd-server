@@ -223,7 +223,7 @@ void cmp_bind_canvas(t_canvas* obj, t_symbol* s)
 
 void cmp_unbind(t_pd* obj, t_symbol* s)
 {
-    pd_unbind(obj,s);
+    pd_unbind(obj, s);
 }
 
 void cmp_add_searchpath(t_symbol* s)
@@ -374,6 +374,14 @@ AtomList* AtomListFromString(std::string in_string)
     } else {
         list = new AtomList;
     }
+
+    // float workaround
+
+    if (list->size() ==1)
+        if (list->at(0).isFloat())
+        {
+            list->insert(0,AtomList(gensym("float")));
+        }
 
     return list;
 }
@@ -823,7 +831,7 @@ EXTERN std::string cmp_get_audio_apis()
 #ifdef USEAPI_PORTAUDIO
 #ifdef _WIN32
     c += "ASIO (via portaudio),"; //sprintf(buf + strlen(buf),
-        //"{\"ASIO (via portaudio)\" %d} ", API_PORTAUDIO);
+//"{\"ASIO (via portaudio)\" %d} ", API_PORTAUDIO);
 #else
 #ifdef __APPLE__
     c += "standard (portaudio) "; //sprintf(buf + strlen(buf),"{\"standard (portaudio)\" %d} ", API_PORTAUDIO);
@@ -834,20 +842,46 @@ EXTERN std::string cmp_get_audio_apis()
 #endif
 
 #ifdef USEAPI_JACK
-        c += "jack,"; //sprintf(buf + strlen(buf), "{jack %d} ", API_JACK); n++;
+    c += "jack,"; //sprintf(buf + strlen(buf), "{jack %d} ", API_JACK); n++;
 #endif
 #ifdef USEAPI_AUDIOUNIT
-        c += "AudioUnit,"; //sprintf(buf + strlen(buf), "{AudioUnit %d} ", API_AUDIOUNIT); n++;
+    c += "AudioUnit,"; //sprintf(buf + strlen(buf), "{AudioUnit %d} ", API_AUDIOUNIT); n++;
 #endif
 
 #ifdef USEAPI_DUMMY
-        c += "dummy,"; //sprintf(buf + strlen(buf), "{dummy %d} ", API_DUMMY); n++;
+    c += "dummy,"; //sprintf(buf + strlen(buf), "{dummy %d} ", API_DUMMY); n++;
 #endif
 
-        return c;
+    return c;
 }
 
 EXTERN void* cmp_pdthis()
 {
     return pd_this;
+}
+
+//
+
+string cmp_list_bind_objects()
+{
+    string ret = "";
+
+    t_symbol** hashTable = pd_ceammc_gensym_hash_table();
+
+    if (!hashTable) {
+        error("hash table error!");
+        return "";
+    }
+
+    for (int i = 0; i < pd_ceammc_gensym_hash_table_size(); i++) {
+        t_symbol* s = hashTable[i];
+
+        if (s) {
+            if (s->s_thing) {
+                ret += string(s->s_name) + ",";
+            }
+        }
+    }
+
+    return ret;
 }

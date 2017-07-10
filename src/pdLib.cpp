@@ -3,7 +3,7 @@
 #include "pdlib.hpp"
 
 //temporary
-std::map<std::string, t_updateUI>* updateUImap;
+map<string, t_updateUI>* updateUImap;
 #ifdef UNIX
 #include <signal.h>
 #endif
@@ -80,7 +80,6 @@ EXTERN void uimsg_set_updateUI(t_pd* x, void* uiobj, t_updateUI func);
 //#include <QDebug>
 
 using namespace ceammc;
-
 using namespace std;
 
 //static t_pdinstance* cm_pd;
@@ -91,7 +90,7 @@ using namespace std;
 
 typedef void (*t_updatePdObjectUI)(t_pd* obj, void* uiobj, AtomList msg);
 
-//void cmp_error(std::string msg)
+//void cmp_error(string msg)
 //{
 //    cout << "## Pd lib error: %s\n"
 //         << msg << "\n";
@@ -103,7 +102,7 @@ void cmp_pdinit()
 {
     //pd_init();
 
-    //std::cout << "##### cmp_pdinit" << std::endl;
+    //cout << "##### cmp_pdinit" << endl;
 
     // copied from libpd
     signal(SIGFPE, SIG_IGN);
@@ -276,7 +275,7 @@ string cmp_list_loaded_libraries()
     return ret;
 }
 
-int cmp_loadlib(std::string name)
+int cmp_loadlib(string name)
 {
     sys_load_lib(canvas_getcurrent(), name.c_str());
 }
@@ -318,9 +317,9 @@ t_canvas* cmp_new_patch()
             ret = ret->gl_next;
         }
 
-        //std::cout << "pd_this: " << pd_this << "\n";
+        //cout << "pd_this: " << pd_this << "\n";
     } else {
-        std::cout << "pd_this ERROR!\n";
+        cout << "pd_this ERROR!\n";
     }
 
     //ret = pd_this->pd_canvaslist;
@@ -365,7 +364,7 @@ void cmp_closepatch(t_canvas* canvas)
 
 // --------------------------------
 
-AtomList* AtomListFromString(std::string in_string)
+AtomList* stringToAtomList(string in_string)
 {
     AtomList* list;
 
@@ -391,20 +390,34 @@ AtomList* AtomListFromString(std::string in_string)
     return list;
 }
 
+string atomListToString(AtomList* list)
+{
+    string ret;
+
+    for (int i=0;i<list->size();i++)
+    {
+        ret += list->at(i).asString()+" ";
+    }
+
+    return ret;
+}
+
+
+
 // --------------------------------
 
 typedef t_object* (*t_newempty)();
 typedef t_object* (*t_newfloat)(t_float);
 typedef t_object* (*t_newgimme)(t_symbol* s, int argc, t_atom* argv);
 
-t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int y)
+t_object* cmp_create_object(t_canvas* canvas, string class_name, int x, int y)
 {
     //cout << "create object\n";
 
     t_object* ret2 = 0;
     t_object* ret1 = 0;
 
-    AtomList* list = AtomListFromString(class_name);
+    AtomList* list = stringToAtomList(class_name);
     //cout << "list: " << *list << "\n";
 
     if (list->size() == 0) {
@@ -433,7 +446,7 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
                 t_newgimme new_fn = (t_newgimme)m[i].me_fun;
                 t_atom* al = list->toPdData();
                 obj_ = (*new_fn)(OBJ_NAME, list->size(), al);
-                std::cout << "GIMME" << std::endl;
+                cout << "GIMME" << endl;
                 break;
             }
 
@@ -444,7 +457,7 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
             if (m[i].me_arg[0] == A_NULL) {
                 t_newempty new_fn = (t_newempty)m[i].me_fun;
                 obj_ = (*new_fn)();
-                std::cout << "NULL" << std::endl;
+                cout << "NULL" << endl;
                 break;
             }
 
@@ -452,7 +465,7 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
                 t_newfloat new_fn = (t_newfloat)m[i].me_fun;
                 t_float f = list->empty() ? 0 : list->at(0).asFloat(0);
                 obj_ = (*new_fn)(f);
-                std::cout << "DEFFLOAT" << std::endl;
+                cout << "DEFFLOAT" << endl;
                 break;
             }
 
@@ -460,7 +473,7 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
                 t_newfloat new_fn = (t_newfloat)m[i].me_fun;
                 t_float f = list->empty() ? 0 : list->at(0).asFloat(0);
                 obj_ = (*new_fn)(f);
-                std::cout << "FLOAT" << std::endl;
+                cout << "FLOAT" << endl;
                 break;
             }
         }
@@ -520,8 +533,8 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
     //    delete bufp;
     //
 
-    //std::cout << "class name: " << obj_->te_g.g_pd->c_name->s_name << std::endl;
-    //std::cout << "class help name: " << ((t_class*)ret2)->c_helpname->s_name << std::endl;
+    //cout << "class name: " << obj_->te_g.g_pd->c_name->s_name << endl;
+    //cout << "class help name: " << ((t_class*)ret2)->c_helpname->s_name << endl;
 
     //delete list;
 
@@ -683,23 +696,23 @@ void cmp_switch_dsp(bool on)
 
 // -------------------------------------------
 
-void cmp_sendstring(t_object* obj, std::string msg)
+void cmp_sendstring(t_object* obj, string msg)
 {
-    //cout << "\n ||| sendstring " << std::endl;
+    //cout << "\n ||| sendstring " << endl;
 
-    AtomList* list = AtomListFromString(msg);
+    AtomList* list = stringToAtomList(msg);
 
-    //cout << "list size: " << list->size() << std::endl;
+    //cout << "list size: " << list->size() << endl;
 
-    //cout << "list: " << list << std::endl;
+    //cout << "list: " << list << endl;
 
     AtomList list2 = *list; //->subList(1, list->size());
     list2.remove(0);
 
-    //cout << "list2: first element " << list->at(0).asSymbol()->s_name << " size: " << list2.size() << " " << list2 << std::endl;
-    //cout << "pd object: " << obj << std::endl;
+    //cout << "list2: first element " << list->at(0).asSymbol()->s_name << " size: " << list2.size() << " " << list2 << endl;
+    //cout << "pd object: " << obj << endl;
 
-    //cout << "object class name " << ((t_class*)obj)->c_name->s_name << std::endl;
+    //cout << "object class name " << ((t_class*)obj)->c_name->s_name << endl;
     //cout << "as symbol: " << list->at(0).asSymbol() << "\n";
 
     //t_object* o = (t_object*)obj;
@@ -718,7 +731,7 @@ void cmp_sendstring(t_object* obj, std::string msg)
     delete list;
 }
 
-void cmp_post(std::string text)
+void cmp_post(string text)
 {
     post("%s", text.c_str());
 }
@@ -811,18 +824,18 @@ EXTERN t_cmp_audio_info* cmp_get_audio_device_info()
 
     //cout << indevlist << "||" << outdevlist << "\n";
 
-    //ret->inputDeviceList = std::string(indevlist,1024);
-    //ret->outputDeviceList = std::string(outdevlist,1024);
+    //ret->inputDeviceList = string(indevlist,1024);
+    //ret->outputDeviceList = string(outdevlist,1024);
 
     return 0;
 }
 
-EXTERN std::string cmp_get_audio_apis()
+EXTERN string cmp_get_audio_apis()
 {
     //    char* buf = new char[1024];
     //    sys_get_audio_apis(buf);
 
-    std::string c; // = buf;
+    string c; // = buf;
 
 #ifdef USEAPI_OSS
     c += "OSS,"; //sprintf(buf + strlen(buf), "{OSS %d} ", API_OSS); n++;

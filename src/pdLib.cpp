@@ -197,9 +197,9 @@ void cmp_pdinit()
     //hack lol - removes empty canvas with array template and creates an empty new one
     cmp_closepatch(cmp_new_patch());
 
-    cout << ("## cm_pd: %x") << pd_this << "\n";
+    //cout << ("## cm_pd: %x") << pd_this << "\n";
 
-    cout << "audio ins: " << sys_get_inchannels() << " outs: " << sys_get_outchannels() << "\n";
+    //cout << "audio ins: " << sys_get_inchannels() << " outs: " << sys_get_outchannels() << "\n";
 }
 
 void cmp_setprinthook(t_printhook h)
@@ -241,7 +241,7 @@ bool cmp_is_abstraction(t_object* x)
 {
     bool ret = ((pd_class(&x->te_pd) == canvas_class) && canvas_isabstraction((t_canvas*)x));
 
-    cout << "is abstraction: " << ret << "\n";
+    //cout << "is abstraction: " << ret << "\n";
 
     return ret;
 }
@@ -286,7 +286,7 @@ void cmp_clear_searchpath()
 
 t_canvas* cmp_new_patch()
 {
-    cout << ("## new patch for pd instance: %x") << pd_this << "\n";
+    //cout << ("## new patch for pd instance: %x") << pd_this << "\n";
 
     AtomList* list = new AtomList;
     *list = Atom(gensym("Untitled-1"));
@@ -308,7 +308,7 @@ t_canvas* cmp_new_patch()
         ret = pd_this->pd_canvaslist->gl_next;
 
         while (ret->gl_next) {
-            std::cout << "canvas: " << ret << "\n";
+            //cout << "canvas: " << ret << "\n";
             ret = ret->gl_next;
         }
 
@@ -319,7 +319,7 @@ t_canvas* cmp_new_patch()
 
     //ret = pd_this->pd_canvaslist;
 
-    cout << "new canvas: %x" << ret << "\n";
+    //cout << "new canvas: %x" << ret << "\n";
 
     //pd_typedmess((t_pd*)ret, gensym("dsp"), 1, AtomList(Atom(1.0f)).toPdData());
 
@@ -354,7 +354,7 @@ void cmp_closepatch(t_canvas* canvas)
     if (canvas)
         pd_free((t_pd*)canvas);
 
-    cout << ("closed patch") << "\n'";
+    //cout << ("closed patch") << "\n'";
 }
 
 // --------------------------------
@@ -386,13 +386,13 @@ typedef t_object* (*t_newgimme)(t_symbol* s, int argc, t_atom* argv);
 
 t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int y)
 {
-    std::cout << "create object\n";
+    //cout << "create object\n";
 
     t_object* ret2 = 0;
     t_object* ret1 = 0;
 
     AtomList* list = AtomListFromString(class_name);
-    std::cout << "list: " << *list << "\n";
+    //cout << "list: " << *list << "\n";
 
     if (list->size() == 0) {
         delete list;
@@ -459,12 +459,14 @@ t_object* cmp_create_object(t_canvas* canvas, std::string class_name, int x, int
     t_object* obj_ = (t_object*)pd_newest();
 
     if (obj_ == ret1) {
-        cout << "object creation error\n";
+        //cout << "object creation error\n";
+        cmp_post("object creation error!");
         return 0;
     }
 
     if (!obj_) {
-        cout << "object creation error\n";
+        //cout << "object creation error\n";
+        cmp_post("object creation error!");
         return 0;
     }
 
@@ -644,7 +646,7 @@ void cmp_switch_dsp(bool on)
         return;
     }
 
-    cout << "## pd_this: %x" << pd_this << "\n";
+    //cout << "## pd_this: %x" << pd_this << "\n";
 
     AtomList list;
     list.append(Atom(on ? 1.0f : 0.0f));
@@ -661,7 +663,7 @@ void cmp_switch_dsp(bool on)
     t_canvas* ret = pd_this->pd_canvaslist->gl_next;
 
     while (ret->gl_next) {
-        std::cout << "canvas: " << ret << "\n";
+        //cout << "canvas: " << ret << "\n";
         ret = ret->gl_next;
     }
 };
@@ -670,26 +672,26 @@ void cmp_switch_dsp(bool on)
 
 void cmp_sendstring(t_object* obj, std::string msg)
 {
-    std::cout << "\n ||| sendstring " << std::endl;
+    //cout << "\n ||| sendstring " << std::endl;
 
     AtomList* list = AtomListFromString(msg);
 
-    std::cout << "list size: " << list->size() << std::endl;
+    //cout << "list size: " << list->size() << std::endl;
 
-    std::cout << "list: " << list << std::endl;
+    //cout << "list: " << list << std::endl;
 
     AtomList list2 = *list; //->subList(1, list->size());
     list2.remove(0);
 
-    std::cout << "list2: first element " << list->at(0).asSymbol()->s_name << " size: " << list2.size() << " " << list2 << std::endl;
-    std::cout << "pd object: " << obj << std::endl;
+    //cout << "list2: first element " << list->at(0).asSymbol()->s_name << " size: " << list2.size() << " " << list2 << std::endl;
+    //cout << "pd object: " << obj << std::endl;
 
-    std::cout << "object class name " << ((t_class*)obj)->c_name->s_name << std::endl;
-    std::cout << "as symbol: " << list->at(0).asSymbol() << "\n";
+    //cout << "object class name " << ((t_class*)obj)->c_name->s_name << std::endl;
+    //cout << "as symbol: " << list->at(0).asSymbol() << "\n";
 
     //t_object* o = (t_object*)obj;
 
-    cout << ("pd_this in sendstring: %x") << pd_this << "\n";
+    //cout << ("pd_this in sendstring: %x") << pd_this << "\n";
 
     t_pd* pd = 0;
 

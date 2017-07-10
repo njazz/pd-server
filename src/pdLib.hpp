@@ -9,9 +9,12 @@
 extern "C" {
 #include <m_imp.h>
 #include <m_pd.h>
+#include <x_ceammc.h>
 }
 
 #include <map>
+
+using namespace std;
 
 typedef void (*t_updateUI)(void* uiobj, ceammc::AtomList msg);
 
@@ -72,7 +75,7 @@ extern void cmp_clear_searchpath();
 /// \brief returns list of loaded externals
 /// \return
 ///
-extern ceammc::AtomList cmp_get_loaded_list();
+extern std::string cmp_list_loaded_libraries();
 
 ////
 /// \brief load external
@@ -343,6 +346,9 @@ void cmp_bind_canvas(t_canvas* obj, t_symbol* s); ///> bind canvas to symbol
 void cmp_unbind(t_pd* obj, t_symbol* s); ///> remove binding
 
 std::string cmp_list_bind_objects();
+
+vector<string> cmp_list_loaded_classes();
+
 
 
 #endif // CM_PDLINK_H

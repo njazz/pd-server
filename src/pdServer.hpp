@@ -269,7 +269,8 @@ public:
 
     ServerPath* path();
 
-    vector<string*> listRegisteredObjects();
+    static string listLoadedLibraries();
+    static vector<string> listLoadedClasses();
 
     void addSearchPath(string searchPath);
 

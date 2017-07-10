@@ -235,6 +235,8 @@ t_class *class_new(t_symbol *s, t_newmethod newmethod, t_method freemethod,
 #if 0
     post("class: %s", c->c_name->s_name);
 #endif
+    //ceammc
+    sys_ceammc_add_class_to_loadlist(c->c_name->s_name);
     return (c);
 }
 

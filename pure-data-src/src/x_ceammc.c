@@ -50,3 +50,15 @@ size_t pd_ceammc_gensym_hash_max_chain()
 
     return res;
 }
+
+// Qtpd
+
+t_loaded_classes_list* sys_loaded_classes;
+
+void sys_ceammc_add_class_to_loadlist(const char* classname)
+{
+    t_loaded_classes_list* ll = (t_loaded_classes_list*)getbytes(sizeof(*ll));
+    ll->ll_name = gensym(classname);
+    ll->ll_next = sys_loaded_classes;
+    sys_loaded_classes = ll;
+}

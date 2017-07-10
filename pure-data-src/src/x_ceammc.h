@@ -24,6 +24,23 @@ extern "C" {
 EXTERN t_symbol** pd_ceammc_gensym_hash_table(void);
 EXTERN size_t pd_ceammc_gensym_hash_table_size(void);
 
+// Qtpd
+typedef struct _loadedlist
+{
+    struct _loadedlist *ll_next;
+    t_symbol *ll_name;
+} t_loadlist;
+
+EXTERN t_loadlist *sys_loaded;
+
+typedef struct _loaded_classes_list
+{
+    struct _loaded_classes_list *ll_next;
+    t_symbol *ll_name;
+} t_loaded_classes_list;
+
+EXTERN t_loaded_classes_list *sys_loaded_classes;
+
 #if defined(__cplusplus)
 }
 #endif

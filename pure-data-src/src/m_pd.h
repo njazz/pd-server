@@ -808,8 +808,7 @@ EXTERN int pd_getdspstate(void);
     EXTERN void canvas_saveto(t_canvas *x, t_binbuf *b);
 
     //ceammc
-    EXTERN size_t pd_ceammc_gensym_hash_table_size();
-    EXTERN t_symbol** pd_ceammc_gensym_hash_table();
+    EXTERN void sys_ceammc_add_class_to_loadlist(const char* classname);
 
 #if defined(_LANGUAGE_C_PLUS_PLUS) || defined(__cplusplus)
 }

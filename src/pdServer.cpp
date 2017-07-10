@@ -562,7 +562,13 @@ void ServerInstance::setConsoleObserver(ConsoleObserver* o)
 
 ServerPath* ServerInstance::path() { return _path; };
 
-vector<string*> ServerInstance::listRegisteredObjects(){};
+string ServerInstance::listLoadedLibraries(){
+    return cmp_list_loaded_libraries();
+};
+
+vector<string> ServerInstance::listLoadedClasses(){
+    return cmp_list_loaded_classes();
+};
 
 void ServerInstance::addSearchPath(string searchPath)
 {

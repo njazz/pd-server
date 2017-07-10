@@ -128,6 +128,8 @@ void cmp_pdinit()
 
     //sys_time = 0;
 
+    sys_loaded_classes = 0;
+
     pd_init();
 
 #ifdef USEAPI_PORTAUDIO
@@ -256,16 +258,20 @@ t_symbol* cmp_get_path(t_canvas* c)
     return canvas_getdir(c);
 }
 
-AtomList cmp_get_loaded_list()
+string cmp_list_loaded_libraries()
 {
-    AtomList ret;
+    string ret;
 
     // TODO
 
-    //    while (sys_loaded) {
-    //        ret.append(Atom(sys_loaded->ll_name));
-    //        sys_loaded = sys_loaded->ll_next;
-    //    }
+    t_loadlist* list = sys_loaded;
+
+
+    while (list ) {
+        ret += string(list->ll_name->s_name) + ",";
+        list = list->ll_next;
+
+    }
 
     return ret;
 }
@@ -377,10 +383,9 @@ AtomList* AtomListFromString(std::string in_string)
 
     // float workaround
 
-    if (list->size() ==1)
-        if (list->at(0).isFloat())
-        {
-            list->insert(0,AtomList(gensym("float")));
+    if (list->size() == 1)
+        if (list->at(0).isFloat()) {
+            list->insert(0, AtomList(gensym("float")));
         }
 
     return list;
@@ -881,6 +886,24 @@ string cmp_list_bind_objects()
                 ret += string(s->s_name) + ",";
             }
         }
+    }
+
+    return ret;
+}
+
+vector<string> cmp_list_loaded_classes()
+{
+    vector<string> ret;
+
+    // TODO
+
+    t_loaded_classes_list* list = sys_loaded_classes;
+
+    int fuse = 10000;
+    while (list && fuse) {
+        ret.push_back( string(list->ll_name->s_name) );
+        list = list->ll_next;
+        fuse--;
     }
 
     return ret;

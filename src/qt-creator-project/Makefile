@@ -886,6 +886,7 @@ pdLib.o: ../pdLib.cpp ../pdlib.hpp \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
 		../../pure-data-src/src/m_pd.h \
 		../../pure-data-src/src/m_imp.h \
+		../../pure-data-src/src/x_ceammc.h \
 		../../pure-data-src/src/g_canvas.h \
 		../../pure-data-src/src/s_stuff.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pdLib.o ../pdLib.cpp
@@ -896,7 +897,8 @@ pdServer.o: ../pdServer.cpp ../pdServer.hpp \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.h \
 		../../pure-data-src/ceammc/ext/src/lib/ceammc_atom.h \
 		../../pure-data-src/src/m_pd.h \
-		../../pure-data-src/src/m_imp.h
+		../../pure-data-src/src/m_imp.h \
+		../../pure-data-src/src/x_ceammc.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pdServer.o ../pdServer.cpp
 
 d_arithmetic.o: ../../pure-data-src/src/d_arithmetic.c ../../pure-data-src/src/m_pd.h

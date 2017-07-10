@@ -67,7 +67,7 @@ typedef struct _loadedlist
     t_symbol *ll_name;
 } t_loadlist;
 
-static t_loadlist *sys_loaded;
+t_loadlist *sys_loaded;     // removed 'static'
 int sys_onloadlist(const char *classname) /* return true if already loaded */
 {
     t_symbol *s = gensym(classname);

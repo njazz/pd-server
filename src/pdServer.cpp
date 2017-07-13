@@ -318,6 +318,11 @@ ServerPatchcord::ServerPatchcord(t_object* obj1, int idx1, t_object* obj2, int i
     _destInlet = idx2;
 }
 
+ServerPatchcord::~ServerPatchcord()
+{
+    cmp_delete_patchcord(_srcObject, _srcOutlet, _destObject, _destInlet);
+}
+
 t_object* ServerPatchcord::srcObject() { return _srcObject; }
 t_object* ServerPatchcord::destObject() { return _destObject; }
 int ServerPatchcord::srcOutlet() { return _srcOutlet; }

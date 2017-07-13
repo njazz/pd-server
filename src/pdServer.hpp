@@ -171,6 +171,7 @@ class PDSERVER_EXPORT ServerPatchcord {
     int _destInlet;
 public:
     explicit ServerPatchcord(t_object* obj1, int idx1, t_object* obj2, int idx2 );
+    ~ServerPatchcord();
 
     t_object* srcObject();
     t_object* destObject();

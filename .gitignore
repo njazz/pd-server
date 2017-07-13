@@ -33,3 +33,5 @@ src/qt-creator-project/debug/pd-server.dll
 src/qt-creator-project/Makefile.Debug
 *.Release
 src/qt-creator-project/object_script.pd-server.Debug
+
+src/qt-creator-project/Makefile.pd-server

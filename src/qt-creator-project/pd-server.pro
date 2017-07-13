@@ -22,7 +22,7 @@ macx: DEFINES += APPLE \
 unix: DEFINES += HAVE_LIBDL
 
 win32: DEFINES += \
-#    PD_INTERNAL\
+    PD_INTERNAL\
      USEAPI_DUMMY
 
 
@@ -165,13 +165,23 @@ macx: {SOURCES +=     ../../pure-data-src/src/s_audio_pa.c \
         ../../pure-data-src/src/s_midi_pm.c \
 }
 
-win32: {
+win32 {
     SOURCES +=     ../../pure-data-src/src/s_midi_dummy.c \
 }
 
 unix {
     target.path = /usr/local/lib
 
+    INSTALLS += target
+}
+
+win32{
+    target.path = ../qtpd_gui/$$TARGET
+    INSTALLS += target
+}
+win32 {
+    #target.path = $$PWD/bin #/usr/local/lib
+    target.path = ~/Documents/Qtpd/Libraries
     INSTALLS += target
 }
 

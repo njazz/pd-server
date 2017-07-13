@@ -799,7 +799,7 @@ void cmp_set_verbose(int v)
 
 // --------------------------------
 
-EXTERN void cmp_loadbang(t_canvas* canvas)
+void cmp_loadbang(t_canvas* canvas)
 {
     cout << "cmp_loadbang"
          << "\n";
@@ -808,7 +808,7 @@ EXTERN void cmp_loadbang(t_canvas* canvas)
 
 // --------------------------------
 
-EXTERN t_cmp_audio_info* cmp_get_audio_device_info()
+t_cmp_audio_info* cmp_get_audio_device_info()
 {
     t_cmp_audio_info* ret = new t_cmp_audio_info;
 
@@ -829,6 +829,7 @@ EXTERN t_cmp_audio_info* cmp_get_audio_device_info()
 
     return 0;
 }
+
 
 EXTERN string cmp_get_audio_apis()
 {
@@ -873,7 +874,7 @@ EXTERN string cmp_get_audio_apis()
     return c;
 }
 
-EXTERN void* cmp_pdthis()
+ void* cmp_pdthis()
 {
     return pd_this;
 }

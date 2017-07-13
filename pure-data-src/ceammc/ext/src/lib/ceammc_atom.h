@@ -20,6 +20,8 @@
 #include <string>
 #include <utility>
 
+#include "../pd-server_global.h"
+
 namespace ceammc {
 
 class Atom;
@@ -39,7 +41,7 @@ struct DataDesc {
     bool operator!=(const DataDesc& d) const;
 };
 
-class Atom : t_atom {
+class PDSERVER_EXPORT Atom : t_atom {
 public:
     /**
      * @brief logical atom type
@@ -178,11 +180,11 @@ public:
     friend bool operator!=(const Atom& a1, const Atom& a2);
 };
 
-bool operator==(const Atom& a1, const Atom& a2);
-bool operator!=(const Atom& a1, const Atom& a2);
-std::ostream& operator<<(std::ostream& os, const Atom& a);
+PDSERVER_EXPORT bool operator==(const Atom& a1, const Atom& a2);
+PDSERVER_EXPORT bool operator!=(const Atom& a1, const Atom& a2);
+PDSERVER_EXPORT std::ostream& operator<<(std::ostream& os, const Atom& a);
 
-bool to_outlet(t_outlet* x, const Atom& a);
+PDSERVER_EXPORT bool to_outlet(t_outlet* x, const Atom& a);
 
 static inline bool isFloat(const Atom& a) { return a.isFloat(); }
 static inline bool isSymbol(const Atom& a) { return a.isSymbol(); }

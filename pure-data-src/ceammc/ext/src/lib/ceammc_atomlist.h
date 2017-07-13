@@ -19,13 +19,15 @@
 #include <string>
 #include <vector>
 
+#include "../pd-server_global.h"
+
 namespace ceammc {
 
 typedef std::vector<t_float> FloatList;
 typedef bool (*AtomPredicate)(const Atom& a);
 typedef Atom (*AtomGenerator)();
 
-class AtomList {
+class PDSERVER_EXPORT AtomList {
     static bool calc_rel_idx(int pos, size_t* dest, size_t sz);
     bool getRelativeIdx(int pos, size_t* idx) const;
 
@@ -338,11 +340,11 @@ T AtomList::reduce(T init, T (*fn)(const Atom&, const Atom&)) const
     return accum;
 }
 
-bool operator==(const AtomList& l1, const AtomList& l2);
-bool operator!=(const AtomList& l1, const AtomList& l2);
-std::ostream& operator<<(std::ostream& os, const AtomList& l);
+PDSERVER_EXPORT bool operator==(const AtomList& l1, const AtomList& l2);
+PDSERVER_EXPORT bool operator!=(const AtomList& l1, const AtomList& l2);
+PDSERVER_EXPORT std::ostream& operator<<(std::ostream& os, const AtomList& l);
 
-void to_outlet(t_outlet* x, const AtomList& a);
+PDSERVER_EXPORT void to_outlet(t_outlet* x, const AtomList& a);
 
 template <typename T>
 static Atom atomFrom(T v) { return Atom(v); }

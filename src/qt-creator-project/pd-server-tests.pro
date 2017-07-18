@@ -4,10 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       -= core
+QT       -=  gui
 
-TARGET = pd-server
-TEMPLATE = lib
+TARGET = pd-server-tests
+
+CONFIG   += console
+CONFIG   -= app_bundle
+
+TEMPLATE = app
 
 DEFINES += PDSERVER_LIBRARY \
     PD \
@@ -127,7 +131,8 @@ SOURCES += \
     ../../pure-data-src/ceammc/ext/src/lib/ceammc_atomlist.cpp \
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.cpp \
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_format.cpp \
-    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp
+    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.cpp \
+    ../../tests/pd-server-tests.cpp
 
 HEADERS +=\
         ../pd-server_global.h \
@@ -153,7 +158,98 @@ HEADERS +=\
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_format.h \
 #    ../../pure-data-src/ceammc/ext/src/lib/ceammc_property.h \
     ../pdUpdate.hpp \
-    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h
+    ../../pure-data-src/ceammc/ext/src/lib/ceammc_log.h \
+    ../../tests/catch/catch_session.hpp \
+    ../../tests/catch/catch_with_main.hpp \
+    ../../tests/catch/catch.hpp \
+    ../../tests/catch/internal/catch_approx.hpp \
+    ../../tests/catch/internal/catch_assertionresult.h \
+    ../../tests/catch/internal/catch_assertionresult.hpp \
+    ../../tests/catch/internal/catch_capture.hpp \
+    ../../tests/catch/internal/catch_clara.h \
+    ../../tests/catch/internal/catch_commandline.hpp \
+    ../../tests/catch/internal/catch_common.h \
+    ../../tests/catch/internal/catch_common.hpp \
+    ../../tests/catch/internal/catch_compiler_capabilities.h \
+    ../../tests/catch/internal/catch_config.hpp \
+    ../../tests/catch/internal/catch_console_colour_impl.hpp \
+    ../../tests/catch/internal/catch_console_colour.hpp \
+    ../../tests/catch/internal/catch_context_impl.hpp \
+    ../../tests/catch/internal/catch_context.h \
+    ../../tests/catch/internal/catch_debugger.h \
+    ../../tests/catch/internal/catch_debugger.hpp \
+    ../../tests/catch/internal/catch_default_main.hpp \
+    ../../tests/catch/internal/catch_errno_guard.hpp \
+    ../../tests/catch/internal/catch_evaluate.hpp \
+    ../../tests/catch/internal/catch_exception_translator_registry.hpp \
+    ../../tests/catch/internal/catch_expression_lhs.hpp \
+    ../../tests/catch/internal/catch_fatal_condition.hpp \
+    ../../tests/catch/internal/catch_generators_impl.hpp \
+    ../../tests/catch/internal/catch_generators.hpp \
+    ../../tests/catch/internal/catch_impl.hpp \
+    ../../tests/catch/internal/catch_interfaces_capture.h \
+    ../../tests/catch/internal/catch_interfaces_config.h \
+    ../../tests/catch/internal/catch_interfaces_exception.h \
+    ../../tests/catch/internal/catch_interfaces_generators.h \
+    ../../tests/catch/internal/catch_interfaces_registry_hub.h \
+    ../../tests/catch/internal/catch_interfaces_reporter.h \
+    ../../tests/catch/internal/catch_interfaces_runner.h \
+    ../../tests/catch/internal/catch_interfaces_tag_alias_registry.h \
+    ../../tests/catch/internal/catch_interfaces_testcase.h \
+    ../../tests/catch/internal/catch_legacy_reporter_adapter.h \
+    ../../tests/catch/internal/catch_legacy_reporter_adapter.hpp \
+    ../../tests/catch/internal/catch_list.hpp \
+    ../../tests/catch/internal/catch_matchers_string.h \
+    ../../tests/catch/internal/catch_matchers_string.hpp \
+    ../../tests/catch/internal/catch_matchers_vector.h \
+    ../../tests/catch/internal/catch_matchers.hpp \
+    ../../tests/catch/internal/catch_message.h \
+    ../../tests/catch/internal/catch_message.hpp \
+    ../../tests/catch/internal/catch_notimplemented_exception.h \
+    ../../tests/catch/internal/catch_notimplemented_exception.hpp \
+    ../../tests/catch/internal/catch_objc_arc.hpp \
+    ../../tests/catch/internal/catch_objc.hpp \
+    ../../tests/catch/internal/catch_option.hpp \
+    ../../tests/catch/internal/catch_platform.h \
+    ../../tests/catch/internal/catch_ptr.hpp \
+    ../../tests/catch/internal/catch_reenable_warnings.h \
+    ../../tests/catch/internal/catch_registry_hub.hpp \
+    ../../tests/catch/internal/catch_reporter_registrars.hpp \
+    ../../tests/catch/internal/catch_reporter_registry.hpp \
+    ../../tests/catch/internal/catch_result_builder.h \
+    ../../tests/catch/internal/catch_result_builder.hpp \
+    ../../tests/catch/internal/catch_result_type.h \
+    ../../tests/catch/internal/catch_run_context.hpp \
+    ../../tests/catch/internal/catch_section_info.h \
+    ../../tests/catch/internal/catch_section_info.hpp \
+    ../../tests/catch/internal/catch_section.h \
+    ../../tests/catch/internal/catch_section.hpp \
+    ../../tests/catch/internal/catch_stream.h \
+    ../../tests/catch/internal/catch_stream.hpp \
+    ../../tests/catch/internal/catch_streambuf.h \
+    ../../tests/catch/internal/catch_suppress_warnings.h \
+    ../../tests/catch/internal/catch_tag_alias_registry.h \
+    ../../tests/catch/internal/catch_tag_alias_registry.hpp \
+    ../../tests/catch/internal/catch_tag_alias.h \
+    ../../tests/catch/internal/catch_test_case_info.h \
+    ../../tests/catch/internal/catch_test_case_info.hpp \
+    ../../tests/catch/internal/catch_test_case_registry_impl.hpp \
+    ../../tests/catch/internal/catch_test_case_tracker.hpp \
+    ../../tests/catch/internal/catch_test_registry.hpp \
+    ../../tests/catch/internal/catch_test_spec_parser.hpp \
+    ../../tests/catch/internal/catch_test_spec.hpp \
+    ../../tests/catch/internal/catch_text.h \
+    ../../tests/catch/internal/catch_timer.h \
+    ../../tests/catch/internal/catch_timer.hpp \
+    ../../tests/catch/internal/catch_tostring.h \
+    ../../tests/catch/internal/catch_tostring.hpp \
+    ../../tests/catch/internal/catch_totals.hpp \
+    ../../tests/catch/internal/catch_type_traits.hpp \
+    ../../tests/catch/internal/catch_version.h \
+    ../../tests/catch/internal/catch_version.hpp \
+    ../../tests/catch/internal/catch_wildcard_pattern.hpp \
+    ../../tests/catch/internal/catch_windows_h_proxy.h \
+    ../../tests/catch/internal/catch_xmlwriter.hpp
     #../../../../../../../Program Files/boost/boost_1_55_0/boost/shared_ptr.hpp
 
 #win32: HEADERS +=    ../../../../../../../Program Files/boost/boost_1_55_0/boost/shared_ptr.hpp
@@ -169,11 +265,11 @@ win32 {
     SOURCES +=     ../../pure-data-src/src/s_midi_dummy.c \
 }
 
-unix {
-    target.path = /usr/local/lib
+#unix {
+#    target.path = /usr/local/lib
 
-    INSTALLS += target
-}
+#    INSTALLS += target
+#}
 
 win32{
     target.path = ../qtpd_gui/$$TARGET
@@ -191,7 +287,8 @@ INCLUDEPATH += ../../pure-data-src/ceammc/ext/src/lib/ \
             #/usr/local/include \
             ../../pure-data-src/portmidi/pm_common \
             ../../pure-data-src/portmidi/porttime \
-            ../../pure-data-src/portaudio/include
+            ../../pure-data-src/portaudio/include \
+            ../../tests/catch
 
 win32:INCLUDEPATH += C:/Boost/include/boost-1_55
 
@@ -203,4 +300,4 @@ win32:LIBS += -lws2_32
 
 QMAKE_MAC_SDK = macosx10.12
 
-
+QMAKE_LFLAGS += '-Wl,-rpath,/users/njazz/Qt/5.8/clang_64/lib' \

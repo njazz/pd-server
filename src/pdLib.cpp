@@ -1,6 +1,6 @@
 //#include "pdlib.h"
 
-#include "pdlib.hpp"
+#include "pdLib.hpp"
 
 //temporary
 map<string, t_updateUI>* updateUImap;

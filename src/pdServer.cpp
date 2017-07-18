@@ -584,15 +584,16 @@ void ServerInstance::addSearchPath(string searchPath)
 
 bool ServerInstance::loadLibrary(string libraryName)
 {
+    cmp_post("loading library '" + libraryName + "' ...");
+
     bool ret = cmp_loadlib(libraryName);
 
-    //cmp_post("loading library '" + libraryName + "' ...");
-
-    if (ret)
-        cmp_error("Library not loaded: " + libraryName);
+    if (!ret)
+        cmp_error("Library not loaded: \"" + libraryName + "\"");
 
     return ret;
 };
+
 void ServerInstance::loadExternal(string externalName){};
 
 void ServerInstance::post(string text) { cmp_post(text); };

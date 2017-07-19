@@ -18,7 +18,7 @@ using namespace ceammc;
 
 typedef vector<string> ServerPath;
 
-class PDSERVER_EXPORT Observer  {
+class PDSERVER_EXPORT Observer {
 private:
     AtomList* _data;
 
@@ -27,7 +27,7 @@ public:
     virtual void update();
 
     void setData(AtomList data);
-    AtomList *data();
+    AtomList* data();
 };
 
 class PDSERVER_EXPORT CanvasObserver : public Observer {
@@ -86,7 +86,6 @@ enum ServerObjectType { typeObject,
     typeCanvas,
     typeArray,
     typeAbstraction };
-
 
 class PDSERVER_EXPORT ServerCanvas;
 typedef struct _text t_object;
@@ -168,8 +167,9 @@ class PDSERVER_EXPORT ServerPatchcord {
     t_object* _destObject;
     int _srcOutlet;
     int _destInlet;
+
 public:
-    explicit ServerPatchcord(t_object* obj1, int idx1, t_object* obj2, int idx2 );
+    explicit ServerPatchcord(t_object* obj1, int idx1, t_object* obj2, int idx2);
     ~ServerPatchcord();
 
     t_object* srcObject();
@@ -223,7 +223,6 @@ public:
 
     virtual int inletCount();
     virtual int outletCount();
-
 
     string path();
 

@@ -39,21 +39,11 @@ enable_language(CXX C)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(version)
 include(build_options)
-include(install_paths)
 include(PdPlatform)
 
 include(config)
 include(sound)
 include(cmake_uninstall)
-
-# FFTW3
-option(WITH_FFTW "Use fftw3 library (http://www.fftw.org/)" ON)
-if(WITH_FFTW)
-    include(FindFFTW)
-    if(NOT FFTW_FOUND)
-        set(WITH_FFTW OFF CACHE BOOL "" FORCE)
-    endif()
-endif()
 
 add_subdirectory(pd)
 

@@ -1,1 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -std=gnu99 -funroll-loops -fomit-frame-pointer -dynamiclib -Wl,-headerpad_max_install_names -flat_namespace -undefined dynamic_lookup -o "bob~.d_fat" -install_name "/Users/njazz/Documents/puredata-ceam/pd-server/build/pure-data-src/extra/bob~/"bob~.d_fat "CMakeFiles/bob~.dir/bob~.c.o" 

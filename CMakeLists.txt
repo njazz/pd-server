@@ -29,25 +29,19 @@ endif()
 
 if(APPLE)
     set(CMAKE_MACOSX_RPATH FALSE)
-    # @rpath on macosx
-    # set(CMAKE_SKIP_RPATH True)
-    # set(CMAKE_OSX_DEPLOYMENT_TARGET "10.6")
-    # set(CMAKE_SKIP_BUILD_RPATH FALSE)
-    # set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-    # set(CMAKE_INSTALL_RPATH "@loader_path")
-    # set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
 endif()
 
-project(puredata)
+project(pdserver)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
 enable_language(CXX C)
+
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(version)
 include(build_options)
 include(install_paths)
 include(PdPlatform)
-find_package(Gettext)
+
 include(config)
 include(sound)
 include(cmake_uninstall)
@@ -61,22 +55,15 @@ if(WITH_FFTW)
     endif()
 endif()
 
-add_subdirectory(pure-data-src/portmidi)
-add_subdirectory(pure-data-src/src)
-add_subdirectory(pure-data-src/tcl)
-add_subdirectory(pure-data-src/extra)
-add_subdirectory(pure-data-src/doc)
+add_subdirectory(pd)
 
-if(GETTEXT_FOUND)
-    add_subdirectory(pure-data-src/po)
-endif()
+#add_subdirectory(pure-data-src/portmidi)
+#add_subdirectory(pure-data-src/src)
+#add_subdirectory(pure-data-src/tcl)
+#add_subdirectory(pure-data-src/extra)
+#add_subdirectory(pure-data-src/doc)
 
 enable_testing(true)
-# add_subdirectory(ceammc)
 
 include(summary)
 include(package)
-
-if(APPLE)
-    add_custom_target(mac_deploy SOURCES mac/cmake-build-mac.sh.in mac/codesign.sh mac/dmg.sh)
-endif()

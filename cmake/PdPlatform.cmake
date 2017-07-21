@@ -20,7 +20,6 @@ if(UNIX AND NOT APPLE)
     set(LINUX True)
 endif()
 
-
 if(WIN32)
     include(FindWindowsSDK)
 

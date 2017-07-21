@@ -56,4 +56,3 @@ add_subdirectory(pd)
 enable_testing(true)
 
 include(summary)
-include(package)

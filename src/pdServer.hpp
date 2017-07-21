@@ -304,6 +304,7 @@ public:
     vector<ServerInstance*> instances();
     ServerInstance* firstInstance();
 
+    //todo virtual
     ServerInstance* createInstance();
 };
 

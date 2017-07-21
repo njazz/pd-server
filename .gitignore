@@ -37,3 +37,4 @@ src/qt-creator-project/object_script.pd-server.Debug
 src/qt-creator-project/Makefile.pd-server
 
 src/qt-creator-project/Makefile
+*.user

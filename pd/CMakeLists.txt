@@ -34,27 +34,19 @@ set(D_SRC
 set(G_SRC
     pure-data/src/g_all_guis.c
     pure-data/src/g_array.c
-    pure-data/src/g_bang.c
     pure-data/src/g_canvas.c
     pure-data/src/g_clone.c
     pure-data/src/g_editor.c
     pure-data/src/g_graph.c
     pure-data/src/g_guiconnect.c
-    pure-data/src/g_hdial.c
-    pure-data/src/g_hslider.c
     pure-data/src/g_io.c
     pure-data/src/g_mycanvas.c
-    pure-data/src/g_numbox.c
     pure-data/src/g_readwrite.c
     pure-data/src/g_rtext.c
     pure-data/src/g_scalar.c
     pure-data/src/g_template.c
     pure-data/src/g_text.c
-    pure-data/src/g_toggle.c
-    pure-data/src/g_traversal.c
-    pure-data/src/g_vdial.c
-    pure-data/src/g_vslider.c
-    pure-data/src/g_vumeter.c)
+    pure-data/src/g_traversal.c)
 
 set(S_SRC
     pure-data/src/s_audio.c

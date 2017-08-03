@@ -626,6 +626,22 @@ ServerAudioDevice* ServerInstance::audioDevice() { return _audioDevice; };
 ServerMIDIDevice* ServerInstance::midiDevice() { return _midiDevice; };
 
 string ServerInstance::getAudioAPIs() { return cmp_get_audio_apis(); };
+
+string ServerInstance::getAudioInDevices() {
+
+   t_cmp_audio_info* info = cmp_get_audio_device_info();
+
+   return string(info->inputDeviceList);
+
+};
+
+string ServerInstance::getAudioOutDevices() {
+
+   t_cmp_audio_info* info = cmp_get_audio_device_info();
+
+   return string(info->outputDeviceList);
+
+};
 // ----------------------------------------
 
 TheServer::TheServer()
@@ -668,7 +684,7 @@ AtomList* Observer::data()
 
 // ---------------------------------------
 
-PDSERVER_EXPORT void qtpdUpdate(long objectId, AtomList list)
+PDSERVER_EXPORT void UIUpdate(long objectId, AtomList list)
 {
 
     vector<pair<long, Observer*> >::iterator it;

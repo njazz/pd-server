@@ -24,7 +24,7 @@ extern "C" {
 EXTERN t_symbol** pd_ceammc_gensym_hash_table(void);
 EXTERN size_t pd_ceammc_gensym_hash_table_size(void);
 
-// Qtpd
+// tilde~
 typedef struct _loadedlist
 {
     struct _loadedlist *ll_next;

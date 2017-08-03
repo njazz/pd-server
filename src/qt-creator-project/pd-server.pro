@@ -176,13 +176,13 @@ unix {
 }
 
 win32{
-    target.path = ../qtpd_gui/$$TARGET
+    target.path = ../tilde~/$$TARGET
     INSTALLS += target
 }
 
 win32 {
     #target.path = $$PWD/bin #/usr/local/lib
-    target.path = ~/Documents/Qtpd/Libraries
+    target.path = ~/Documents/tilde~/Libraries
     INSTALLS += target
 }
 

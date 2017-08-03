@@ -265,11 +265,9 @@ string cmp_list_loaded_libraries()
 
     t_loadlist* list = sys_loaded;
 
-
-    while (list ) {
+    while (list) {
         ret += string(list->ll_name->s_name) + ",";
         list = list->ll_next;
-
     }
 
     return ret;
@@ -394,15 +392,12 @@ string atomListToString(AtomList* list)
 {
     string ret;
 
-    for (int i=0;i<list->size();i++)
-    {
-        ret += list->at(i).asString()+" ";
+    for (int i = 0; i < list->size(); i++) {
+        ret += list->at(i).asString() + " ";
     }
 
     return ret;
 }
-
-
 
 // --------------------------------
 
@@ -812,31 +807,40 @@ t_cmp_audio_info* cmp_get_audio_device_info()
 {
     t_cmp_audio_info* ret = new t_cmp_audio_info;
 
-    char* indevlist = new char[32 * 1024];
-    char* outdevlist = new char[32 * 1024];
+    const int devdescsize = 80;
 
-    const int maxndev = 32;
-    const int devdescsize = 1024;
+    char indevlist[32 * 80];
+    char outdevlist[32 * 80];
+
+    const int maxndev = 64;
 
     sys_get_audio_devs(indevlist, &ret->inputDeviceCount,
         outdevlist, &ret->outputDeviceCount, &ret->hasMulti, &ret->hasCallback,
         maxndev, devdescsize);
 
-    //cout << indevlist << "||" << outdevlist << "\n";
+    //cout << indevlist + 80 << "||" << outdevlist << "\n";
+    //cout << ret->inputDeviceCount << "||" << ret->outputDeviceCount << "\n";
 
-    //ret->inputDeviceList = string(indevlist,1024);
-    //ret->outputDeviceList = string(outdevlist,1024);
+    ret->inputDeviceList = "0,";
+    for (int i = 0; i < ret->inputDeviceCount; i++) {
+        ret->inputDeviceList += indevlist + 80 * i;
+        ret->inputDeviceList += ","; //string(indevlist+80*i,80);
+    }
+    ret->outputDeviceList = "0,";
+    for (int i = 0; i < ret->outputDeviceCount; i++) {
+        ret->outputDeviceList += outdevlist + 80 * i; //string(outdevlist+80*i,80);
+        ret->outputDeviceList += ",";
+    }
 
-    return 0;
+    return ret;
 }
-
 
 EXTERN string cmp_get_audio_apis()
 {
     //    char* buf = new char[1024];
     //    sys_get_audio_apis(buf);
 
-    string c; // = buf;
+    string c = "0,"; // not selected
 
 #ifdef USEAPI_OSS
     c += "OSS,"; //sprintf(buf + strlen(buf), "{OSS %d} ", API_OSS); n++;
@@ -853,7 +857,7 @@ EXTERN string cmp_get_audio_apis()
 //"{\"ASIO (via portaudio)\" %d} ", API_PORTAUDIO);
 #else
 #ifdef __APPLE__
-    c += "standard (portaudio) "; //sprintf(buf + strlen(buf),"{\"standard (portaudio)\" %d} ", API_PORTAUDIO);
+    c += "standard (portaudio),"; //sprintf(buf + strlen(buf),"{\"standard (portaudio)\" %d} ", API_PORTAUDIO);
 #else
     c += "portaudio,"; //sprintf(buf + strlen(buf), "{portaudio %d} ", API_PORTAUDIO);
 #endif
@@ -874,7 +878,24 @@ EXTERN string cmp_get_audio_apis()
     return c;
 }
 
- void* cmp_pdthis()
+void cmp_set_audio_driver(std::string driver_name)
+{
+
+    // TODO
+    // sys_set_audio_api(0);
+
+
+}
+void cmp_set_audio_output(std::string output_name)
+{
+    int idx = sys_audiodevnametonumber(1, output_name.c_str());
+
+    // TODO
+}
+void cmp_set_audio_input(std::string input_name)
+{}
+
+void* cmp_pdthis()
 {
     return pd_this;
 }
@@ -915,7 +936,7 @@ vector<string> cmp_list_loaded_classes()
 
     int fuse = 10000;
     while (list && fuse) {
-        ret.push_back( string(list->ll_name->s_name) );
+        ret.push_back(string(list->ll_name->s_name));
         list = list->ll_next;
         fuse--;
     }

@@ -282,6 +282,9 @@ public:
 
     static void sendMessage(string object, string text);
 
+    static string getAudioInDevices();
+    static string getAudioOutDevices();
+
     static string getBindObjectsList();
 
     static void setVerboseLevel(int level);

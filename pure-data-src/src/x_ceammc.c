@@ -51,7 +51,7 @@ size_t pd_ceammc_gensym_hash_max_chain()
     return res;
 }
 
-// Qtpd
+// tilde~
 
 t_loaded_classes_list* sys_loaded_classes;
 

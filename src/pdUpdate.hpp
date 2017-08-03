@@ -6,7 +6,7 @@
 
 using namespace ceammc;
 
-extern void qtpdUpdate (long objectId, AtomList list);
+extern void UIUpdate (long objectId, AtomList list);
 
 extern std::string atomListToString(AtomList* list);
 

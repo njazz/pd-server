@@ -307,7 +307,7 @@ int cmp_get_array_size(t_garray* a);
 /// \param c - Pd canvas
 /// \param name - array name symbol
 /// \param size - minimum size
-/// \param save - save within patch - this is unused while we have FileSaver in qtpd_gui
+/// \param save - save within patch - this is unused while we have FileSaver in tilde~
 /// \param newgraph - unused
 /// \return
 ///
@@ -333,6 +333,9 @@ EXTERN void cmp_loadbang(t_canvas* canvas);
 
 t_cmp_audio_info* cmp_get_audio_device_info(); ///> get audio info structure
 std::string cmp_get_audio_apis(); ///> get list of audio api names as Tcl string {{api name} {api name 2} ...}
+void cmp_set_audio_driver(std::string driver_name);
+void cmp_set_audio_output(std::string output_name);
+void cmp_set_audio_input(std::string input_name);
 
 // ------
 // debug

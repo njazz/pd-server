@@ -20,7 +20,7 @@
 #include <string>
 #include <utility>
 
-#include "../pd-server_global.h"
+#include "pd-server_global.h"
 
 namespace ceammc {
 
